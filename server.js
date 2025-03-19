@@ -1,7 +1,18 @@
 let port = 3000
 
+const { createServer } = require('node:http')
+const server = createServer(app)
+const socket = require("socket.io");
+const io = new socket.Server(server)
 const express = require('express')
 var app = express()
+
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
+
 
 app.get('/', (req,res) => {
   res.sendFile(__dirname+'/src/pages/index.html')

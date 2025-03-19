@@ -1,7 +1,8 @@
-const form = document.body.getElementById("userinput")
-const message = document.body.getElementById('message')
+const form = document.getElementById("userinput")
+const message = document.getElementById('message')
+const socket = io();
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
-  document.body.innerText = message.value
+  document.body.innerHTML += message.value
 })
