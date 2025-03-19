@@ -3,10 +3,7 @@ let port = 3000
 const { createServer } = require('node:http')
 const server = createServer(app)
 const socketio = require("socket.io");
-const httpServer = createServer();
-const io = new socketio.Server(httpServer, {
-  path: "https://bestgem.glitch.me/chat"
-});
+const io = new socketio.Server(server)
 const express = require('express')
 var app = express()
 
