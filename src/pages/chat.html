@@ -19,11 +19,14 @@
     <link rel="stylesheet" href="/chat.css" />
     <script src="/chat.js" defer></script>
   </head>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+  </script>
   <body>
     <form id="userinput">
       <input type="text" placeholder="Send a message..." id="message">
       <input type="submit" placeholder="Send" value="Send">
     </form>
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
   </body>
 </html>
