@@ -16,13 +16,10 @@
     <meta property="og:image" content="https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff">
     <meta name="twitter:card" content="summary">
 
+    <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="/chat.css" />
     <script src="/chat.js" defer></script>
   </head>
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-  <script>
-    const socket = io();
-  </script>
   <body>
     <form id="userinput">
       <input type="text" placeholder="Send a message..." id="message">

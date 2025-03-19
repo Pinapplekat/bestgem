@@ -1,11 +1,12 @@
 let port = 3000
 
-const { createServer } = require('node:http')
-const server = createServer(app)
-const socketio = require("socket.io");
-const io = new socketio.Server(server)
 const express = require('express')
 var app = express()
+const { createServer } = require('http')
+
+const server = createServer(app)
+const socketio = require("socket.io");
+const io = socketio(server)
 
 
 io.on('connection', (socket) => {
