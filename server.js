@@ -1,12 +1,13 @@
 let port = 3000
 
-const express = require('express')
-var app = express()
-const { createServer } = require('http')
+const express = require('express');
+const { createServer } = require('node:http');
+const { join } = require('node:path');
+const { Server } = require('socket.io');
 
-const server = createServer(app)
-const socketio = require("socket.io");
-const io = socketio(server)
+const app = express();
+const server = createServer(app);
+const io = new Server(server);
 
 
 io.on('connection', (socket) => {
@@ -19,11 +20,11 @@ io.on('connection', (socket) => {
 
 
 app.get('/', (req,res) => {
-  res.sendFile(__dirname+'/src/pages/index.html')
+  res.sendFile(__dirname+'/index.html')
 })
 
 app.get('/chat', (req,res) => {
-  res.sendFile(__dirname+'/src/pages/chat.html')
+  res.sendFile(__dirname+'/chat.html')
 })
 
 app.get('/style.css', (req,res) => {
