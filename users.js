@@ -99,5 +99,6 @@ module.exports = {
   validateToken,
   generateToken,
   userExists,
-  getUserByToken
+  getUserByToken,
+  checkPassword
 }
