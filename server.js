@@ -3,7 +3,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser, userExists, checkPassword } = require('./src/users.js')
+const { newUser, userExists, checkPassword, validateToken } = require('./src/users.js')
 const { newMessage } = require('./src/messages.js')
 
 const app = express();
@@ -24,8 +24,10 @@ io.on('connection', (socket) => {
 app.get('/', (req,res) => {
   var { token } = req.query
   if(!token) return res.redirect('/login')
-  
-  res.sendFile(__dirname+'/index.html')
+  if(validateToken(token)){
+    res.sendFile(__dirname+'/index.html')
+  }
+  else return res.redirect('/login')
 })
 
 app.get('/logincheck', (req,res) => {
@@ -34,6 +36,8 @@ app.get('/logincheck', (req,res) => {
     var login = checkPassword({username, password})
     if(login.status.success){
       res.redirect('/?token='+login.token)
+    }else if(!login.status.success){
+      res.send(login.status.message)
     }
   }
 })
