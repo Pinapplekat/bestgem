@@ -3,7 +3,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser, userExists, checkPassword, validateToken } = require('./src/users.js')
+const { newUser, userExists, checkPassword, validateToken, getUserByToken } = require('./src/users.js')
 const { newMessage } = require('./src/messages.js')
 
 const app = express();
@@ -18,6 +18,8 @@ io.on('connection', (socket) => {
   
   socket.on('message', (data) => {
     var message = newMessage(data)
+    if(message.status.success) io.emit('message', message);
+    else if(!message.status.success) return
   });
 });
 
@@ -26,6 +28,7 @@ app.get('/', (req,res) => {
   if(!token) return res.redirect('/login')
   if(validateToken(token)){
     res.sendFile(__dirname+'/index.html')
+    io.emit('join', getUserByToken(token));
   }
   else return res.redirect('/login')
 })

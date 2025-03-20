@@ -14,12 +14,13 @@ function userExists(data){
 }
 
 function newUser(username, password, room){
+  var now = new Date()
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
   var id = users.length
   var token = generateToken(users)
   
-  var user = {username, password, room, id, token}
+  var user = {username, password, room, id, token, creation: now}
   users.push(user)
   fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
   return user
@@ -73,9 +74,30 @@ function validateToken(token){
   }
 }
 
+function getUserByToken(token){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  var exists = false
+  var i = 0;
+  var k
+  users.forEach(item => {
+    if(item.token == token){
+      exists = true
+      k = i
+    }
+    i++
+  })
+  if(exists){
+    return {status:{success: true}, user: users[k]}
+  }else{
+    return {status:{success: false, message: "User could not found with token"}}
+  }
+}
+
 module.exports = {
   newUser,
   validateToken,
   generateToken,
-  userExists
+  userExists,
+  getUserByToken
 }
