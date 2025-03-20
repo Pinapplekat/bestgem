@@ -22,8 +22,9 @@ io.on('connection', (socket) => {
 });
 
 app.get('/', (req,res) => {
-  var { username } = req.query
-  if(!username) return res.redirect('/login')
+  var { token } = req.query
+  if(!token) return res.redirect('/login')
+  
   res.sendFile(__dirname+'/index.html')
 })
 
