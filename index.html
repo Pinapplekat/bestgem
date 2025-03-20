@@ -49,14 +49,17 @@
       class Message{
         constructor(data){
           const messageBox = document.createElement('div')
-          const usernameBody = document.createElement('p')
+          const usernameBody = document.createElement('b')
           const messageBody = document.createElement('p')
+          messageBody.classList.add('messageBody')
+          messageBox.classList.add('messageBox')
+          usernameBody.classList.add('usernameBody')
           var date = new Date(data.timestamp)
           messageBody.innerText = data.message
           usernameBody.innerText = data.username
           messageBox.appendChild(usernameBody)
           messageBox.appendChild(messageBody)
-          document.getElementById('messages').appendChild(messageBody)
+          document.getElementById('messages').appendChild(messageBox)
         }
       }
       

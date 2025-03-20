@@ -200,3 +200,21 @@ label {
 h2 {
   color: var(--color-text-header);
 }
+.messages{
+  max-height: 70vh;
+  max-width: 90vw;
+  overflow: scroll;
+}
+
+.messageBox{
+/*   padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 0; */
+  padding: 0;
+  margin: 0;
+}
+.messageBody{
+  margin: 0;
+  padding: 0;
+}
