@@ -30,7 +30,7 @@ function checkPassword(data){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
   var i = 0
-  var index
+  var index = false
   users.forEach(user => {
     if(user.username == data.username){
       index = i
@@ -41,7 +41,7 @@ function checkPassword(data){
     if(users[index].password == data.password){
       return {status:{success: true}, token: users[index].token}
     }else return {status:{success: false, message: "Password incorrect"}}
-  }else return {status:{success: false, message: "User not found"}}
+  }else if(index == false) return {status:{success: false, message: "User not found"}}
 }
 
 function generateToken(array){

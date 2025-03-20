@@ -40,12 +40,15 @@ app.get('/logincheck', (req,res) => {
     var login = checkPassword({username, password})
     if(login.status.success){
       res.redirect('/?token='+login.token)
+      console.log(username+' login success')
     }else if(!login.status.success){
       res.send(login.status.message)
+      console.log(username+' login fail')
     }
   }else{
     var user = newUser(username, password, room)
     res.redirect('/?token='+user.token)
+    console.log(username+' created account')
   }
 })
 
