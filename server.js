@@ -3,6 +3,8 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
+const { newUser } = require('./src/users.js')
+const { newMessage } = require('./src/messages.js')
 
 const app = express();
 const server = createServer(app);
@@ -14,8 +16,8 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
   
-  socket.on('message', (msg) => {
-    console.log('message: ' + msg);
+  socket.on('message', (data) => {
+    var message = newMessage(data)
   });
 });
 
@@ -23,6 +25,12 @@ app.get('/', (req,res) => {
   var { username } = req.query
   if(!username) return res.redirect('/login')
   res.sendFile(__dirname+'/index.html')
+})
+
+app.get('/logincheck', (req,res) => {
+  var { username, password, room } = req.query
+  
+  res.redirect('/?token=')
 })
 
 app.get('/login', (req,res) => {

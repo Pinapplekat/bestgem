@@ -1,5 +1,10 @@
 const fs = require('fs')
 
+function userExists(data){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+}
+
 function newUser(username, password, room){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
@@ -7,6 +12,8 @@ function newUser(username, password, room){
   var token = generateToken(users)
   
   var user = {username, password, room, id, token}
+  users.push(user)
+  fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
   return user
 }
 
@@ -42,5 +49,6 @@ function validateToken(token){
 
 module.exports = {
   newUser,
-  validateToken
+  validateToken,
+  generateToken
 }
