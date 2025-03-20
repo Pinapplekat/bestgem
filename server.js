@@ -69,6 +69,10 @@ app.get('/chat.js', (req,res) => {
   res.sendFile(__dirname+'/public/chat.js')
 })
 
+app.get('/messages.json', (req,res) => {
+  res.sendFile(__dirname+'/messages.json')
+})
+
 server.listen(port, (e) => {
   if(e) throw e
   console.log('Server listening on https://bestgem.glitch.me/')

@@ -32,7 +32,7 @@ function checkPassword(data){
   var i = 0
   var index = false
   users.forEach(user => {
-    if(user.username == data.username){
+    if(user.username.toLowerCase() == data.username.toLowerCase()){
       index = i
     }
     else i++

@@ -20,7 +20,7 @@
   </head>
   <body>
     <form id="userinput">
-      <input type="text" placeholder="Send a message..." id="message">
+      <input type="text" placeholder="Send a message..." id="message" autocomplete="off">
       <input type="submit" value="Send">
     </form>
     
@@ -49,7 +49,7 @@
       class Message{
         constructor(data){
           const messageBox = document.createElement('div')
-          const usernameBody = document.createElement('span')
+          const usernameBody = document.createElement('p')
           const messageBody = document.createElement('p')
           var date = new Date(data.timestamp)
           messageBody.innerText = data.message
