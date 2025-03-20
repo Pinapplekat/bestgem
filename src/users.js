@@ -24,6 +24,23 @@ function generateToken(array){
   }
 }
 
+function validateToken(token){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  var exists = false
+  users.forEach(item => {
+    if(item.token == token){
+      exists = true
+    }
+  })
+  if(exists){
+    return true
+  }else{
+    return false
+  }
+}
+
 module.exports = {
-  newUser
+  newUser,
+  validateToken
 }
