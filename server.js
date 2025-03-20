@@ -14,9 +14,9 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
   
-  socket.on('message', (data) => {
-    console.log(data)
-  })
+  socket.on('message', (msg) => {
+    console.log('message: ' + msg);
+  });
 });
 
 app.get('/', (req,res) => {

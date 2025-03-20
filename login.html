@@ -27,10 +27,15 @@
         <form action="/">
           <input type="text" placeholder="Username" class="textbox" name="username">
           <input type="password" placeholder="Password" class="textbox" name="password">
+          <input type="text" placeholder="Room" class="textbox" name="room" value="Ruby">
           <input type="submit" placeholder="Enter" value="Enter" class="submit">
           <b>If you do not have an account, one will be created for you.</b>
         </form>
-        
+        <br><hr><br>
+        <form id="urlform">
+          <input type="text" id="url" placeholder="URL of any website">
+          <input type="submit" value="Go">
+        </form>
         
       </div>
     </div>
@@ -45,5 +50,15 @@
         Fullscreen
       </a>
     </footer>
+    
+    <script>
+      var urlform = document.getElementById('urlform')
+      var url = document.getElementById('url')
+      
+      urlform.addEventListener('submit', (e) => {
+        e.preventDefault()
+        window.location.href = url.value
+      })
+    </script>
   </body>
 </html>

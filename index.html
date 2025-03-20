@@ -17,16 +17,28 @@
     <meta name="twitter:card" content="summary">
 
     <link rel="stylesheet" href="/chat.css" />
-    <script src="/chat.js" defer></script>
   </head>
   <body>
     <form id="userinput">
       <input type="text" placeholder="Send a message..." id="message">
       <input type="submit" value="Send">
     </form>
+    
+    
+    <script src="/chat.js"></script>
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     <script>
+      const form = document.getElementById("userinput")
+      const message = document.getElementById('message')
       const socket = io();
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        if (message.value) {
+          socket.emit('message', message.value);
+          message.value = '';
+        }
+      })
     </script>
   </body>
 </html>
