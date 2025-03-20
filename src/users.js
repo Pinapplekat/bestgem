@@ -3,6 +3,14 @@ const fs = require('fs')
 function userExists(data){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
+  var usernameExists = false
+  users.forEach(user => {
+    if(user.username.toLowercase() == data.username.toLowerCase()){
+      usernameExists = true
+    }
+  })
+  if(usernameExists) return true
+  else return false
 }
 
 function newUser(username, password, room){
@@ -15,6 +23,12 @@ function newUser(username, password, room){
   users.push(user)
   fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
   return user
+}
+
+function checkPassword(data){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  var pas
 }
 
 function generateToken(array){
@@ -50,5 +64,6 @@ function validateToken(token){
 module.exports = {
   newUser,
   validateToken,
-  generateToken
+  generateToken,
+  userExists
 }

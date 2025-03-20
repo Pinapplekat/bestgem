@@ -3,7 +3,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser } = require('./src/users.js')
+const { newUser, userExists, checkPassword } = require('./src/users.js')
 const { newMessage } = require('./src/messages.js')
 
 const app = express();
@@ -29,8 +29,12 @@ app.get('/', (req,res) => {
 
 app.get('/logincheck', (req,res) => {
   var { username, password, room } = req.query
-  
-  res.redirect('/?token=')
+  if(userExists({username})){
+    var login = checkPassword({username, password})
+    if(login.status.success){
+      res.redirect('/?token='+login.token)
+    }
+  }
 })
 
 app.get('/login', (req,res) => {
