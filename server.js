@@ -73,6 +73,10 @@ app.get('/messages.json', (req,res) => {
   res.sendFile(__dirname+'/messages.json')
 })
 
+app.get('/users.json', (req,res) => {
+  res.sendFile(__dirname+'/users.json')
+})
+
 server.listen(port, (e) => {
   if(e) throw e
   console.log('Server listening on https://bestgem.glitch.me/')
