@@ -8,11 +8,20 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  
+  socket.on('message', (data) => {
+    console.log(data)
+  })
+});
 
 app.get('/', (req,res) => {
-  var { id } = req.query
-  if(!id) return res.redirect('/login')
+  var { username } = req.query
+  if(!username) return res.redirect('/login')
   res.sendFile(__dirname+'/index.html')
 })
 
@@ -32,7 +41,7 @@ app.get('/chat.js', (req,res) => {
   res.sendFile(__dirname+'/public/chat.js')
 })
 
-app.listen(port, (e) => {
+server.listen(port, (e) => {
   if(e) throw e
   console.log('Server listening on https://bestgem.glitch.me/')
 })

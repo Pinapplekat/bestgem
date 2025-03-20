@@ -4,5 +4,8 @@ const socket = io();
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
-  document.body.innerHTML += message.value
+  if (message.value) {
+    socket.emit('chat message', message.value);
+    message.value = '';
+  }
 })
