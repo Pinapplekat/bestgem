@@ -1,5 +1,4 @@
 let port = 3000
-
 const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
@@ -10,21 +9,15 @@ const server = createServer(app);
 const io = new Server(server);
 
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
-
-
 
 app.get('/', (req,res) => {
+  var { id } = req.query
+  if(!id) return res.redirect('/login')
   res.sendFile(__dirname+'/index.html')
 })
 
-app.get('/chat', (req,res) => {
-  res.sendFile(__dirname+'/chat.html')
+app.get('/login', (req,res) => {
+  res.sendFile(__dirname+'/login.html')
 })
 
 app.get('/style.css', (req,res) => {

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff" />
@@ -17,34 +16,17 @@
     <meta property="og:image" content="https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff">
     <meta name="twitter:card" content="summary">
 
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/chat.css" />
+    <script src="/chat.js" defer></script>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="content" role="main">
-        
-        
-        <form action="/chat">
-          <input type="text" placeholder="Username">
-          <input type="submit" placeholder="Enter" value="Enter">
-        </form>
-        
-        
-      </div>
-    </div>
-    <footer class="footer">
-      <div class="links"></div>
-      <a
-        class="btn--remix"
-        target="_top"
-        href="https://bestgem.glitch.me/"
-      >
-        <img
-          src="https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff"
-          alt="BestGem Logo"
-        />
-        BestGem
-      </a>
-    </footer>
+    <form id="userinput">
+      <input type="text" placeholder="Send a message..." id="message">
+      <input type="submit" placeholder="Send" value="Send">
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+    </script>
   </body>
 </html>
