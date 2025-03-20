@@ -5,7 +5,7 @@ function userExists(data){
   users = Array.from(JSON.parse(users))
   var usernameExists = false
   users.forEach(user => {
-    if(user.username.toLowercase() == data.username.toLowerCase()){
+    if(user.username.toLowerCase() == data.username.toLowerCase()){
       usernameExists = true
     }
   })
@@ -14,7 +14,7 @@ function userExists(data){
 }
 
 function newUser(username, password, room){
-  var now = new Date()
+  var now = Date.now()
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
   var id = users.length

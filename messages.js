@@ -2,7 +2,7 @@ const { validateToken } = require('./users.js')
 const fs = require('fs')
 
 function newMessage(data){
-  var now = new Date()
+  var now = Date.now()
   if(validateToken(data.token)){
     var messages = fs.readFileSync(__dirname+"/messages.json")
     messages = Array.from(JSON.parse(messages))

@@ -3,8 +3,8 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser, userExists, checkPassword, validateToken, getUserByToken } = require('./src/users.js')
-const { newMessage } = require('./src/messages.js')
+const { newUser, userExists, checkPassword, validateToken, getUserByToken } = require('./users.js')
+const { newMessage } = require('./messages.js')
 
 const app = express();
 const server = createServer(app);
@@ -18,8 +18,9 @@ io.on('connection', (socket) => {
   
   socket.on('message', (data) => {
     var message = newMessage(data)
+    if(!message.status.success) return
     if(message.status.success) io.emit('message', message);
-    else if(!message.status.success) return
+    console.log(message)
   });
 });
 

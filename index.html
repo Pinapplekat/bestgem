@@ -43,11 +43,26 @@
       })
       
       class Message{
-        
+        constructor(data){
+          const messageBox = document.createElement('div')
+          const usernameBody = document.createElement('span')
+          const messageBody = document.createElement('p')
+          var date = new Date(data.timestamp)
+          messageBody.innerText = data.message
+          usernameBody.innerText = data.username
+          messageBox.appendChild(usernameBody)
+          messageBox.appendChild(messageBody)
+          document.getElementById('messages').appendChild(messageBody)
+        }
       }
       
       socket.on('join', (user) => {
-        document.
+        new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now()})
+      })
+      
+      socket.on('message', (data) => {
+        if(!data.status.success) return
+        new Message(data)
       })
     </script>
   </body>
