@@ -207,14 +207,17 @@ h2 {
 }
 
 .messageBox{
-/*   padding-left: 10px;
+  padding-left: 10px;
   padding-top: 3px;
   padding-bottom: 3px;
-  padding-left: 0; */
+  padding-left: 0;
   padding: 0;
   margin: 0;
 }
 .messageBody{
   margin: 0;
   padding: 0;
+}
+.sameUser{
+  margin-bottom: 5px;
 }
