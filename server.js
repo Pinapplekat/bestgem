@@ -39,6 +39,9 @@ app.get('/logincheck', (req,res) => {
     }else if(!login.status.success){
       res.send(login.status.message)
     }
+  }else{
+    var user = newUser(username, password, room)
+    res.redirect('/?token='+user.token)
   }
 })
 
