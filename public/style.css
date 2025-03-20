@@ -116,6 +116,7 @@ body {
   place-items: center;
   margin: 0 1rem;
 }
+
 .content {
   display: flex;
   flex-direction: column;
@@ -175,9 +176,20 @@ p {
 }
 form {
   margin: 0.75rem 0;
+  display: grid;
+  grid-template-rows: auto auto;
+  column-gap: 15px;
 }
-button,
-input {
+
+.submit{
+  grid-row: 1 / span 1;
+  cursor: pointer;
+}
+.textbox{
+  grid-row: 1 / span 2;
+}
+
+button,input {
   font-family: inherit;
   font-size: 100%;
   background: #FFFFFF;
