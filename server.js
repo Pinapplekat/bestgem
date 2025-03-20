@@ -17,7 +17,8 @@ io.on('connection', (socket) => {
   });
   
   socket.on('message', (data) => {
-    var message = newMessage(data)
+    var user = getUserByToken(data.token).user
+    var message = newMessage({token: data.token, username: user.username, message: data.message, room: data.room})
     if(!message.status.success) return io.emit('message', {status:{success: false, message:message.status.message},message:message.message});
     if(message.status.success) io.emit('message', message);
     console.log(message)
@@ -39,7 +40,7 @@ app.get('/logincheck', (req,res) => {
   if(userExists({username})){
     var login = checkPassword({username, password})
     if(login.status.success){
-      res.redirect('/?token='+login.token)
+      res.redirect('/?token='+login.token+'&room='+room)
       console.log(username+' login success')
     }else if(!login.status.success){
       res.send(login.status.message)
@@ -47,7 +48,7 @@ app.get('/logincheck', (req,res) => {
     }
   }else{
     var user = newUser(username, password, room)
-    res.redirect('/?token='+user.token)
+    res.redirect('/?token='+user.token+'&room='+room)
     console.log(username+' created account')
   }
 })

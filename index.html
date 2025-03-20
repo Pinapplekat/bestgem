@@ -37,7 +37,11 @@
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         if (message.value) {
-          socket.emit('message', );
+          const queryString = window.location.search
+          const urlParams = new URLSearchParams(queryString)
+          var room = urlParams.get('room')
+          var token = urlParams.get('token')
+          socket.emit('message', {token, message: message.value, room});
           message.value = '';
         }
       })
