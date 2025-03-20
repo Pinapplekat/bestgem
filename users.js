@@ -67,11 +67,7 @@ function validateToken(token){
       exists = true
     }
   })
-  if(exists){
-    return true
-  }else{
-    return false
-  }
+  return exists
 }
 
 function getUserByToken(token){

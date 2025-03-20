@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
   
   socket.on('message', (data) => {
     var message = newMessage(data)
-    if(!message.status.success) return
+    if(!message.status.success) return io.emit('message', {status:{success: false, message:message.status.message},message:message.message});
     if(message.status.success) io.emit('message', message);
     console.log(message)
   });
