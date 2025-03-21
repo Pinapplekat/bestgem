@@ -126,7 +126,6 @@ function getUserBySocket(socket){
   var k = users.findIndex((user) => user.socket === socket);
   
   if(k !== -1){
-    console.log("FOUND")
     return {status:{success: true}, user: users[k]}
   }else{
     return {status:{success: false, message: "User could not be found with socket ID"}}

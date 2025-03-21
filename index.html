@@ -92,6 +92,7 @@
       socket.on('join', (user) => {
         user = user.user
         new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: "Server"})
+        socket.emit('requestroomlist',{ room, token })
       })
       
       socket.on('message', (userdata) => {

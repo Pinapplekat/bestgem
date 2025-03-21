@@ -32,10 +32,10 @@ io.on('connection', (socket) => {
     const currentdata = getUserBySocket(socket.id)
     var i = 0
     if(currentdata.status)if(!currentdata.status.success) return console.log(currentdata.status.message)
-    var index = online.findIndex((user) => user.socket === socket.id);
-    console.log("deleting "+currentdata.user.username+" from list")
+    var index = online.findIndex((onlineuser) => onlineuser.id === currentdata.user.id);
     if (index !== -1) {
-      return online.splice(index, 1)[0];
+      delete online[index]
+    }else{
     }
     io.to(currentdata.user.room).emit('userLeft', {username: currentdata.user.username, id: currentdata.user.id})
   })
