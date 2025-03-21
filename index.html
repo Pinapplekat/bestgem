@@ -74,8 +74,10 @@
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
-          var minutes = date.getMinutes()
-          var hours = date.getHours()
+          var minutes = `${date.getMinutes()}`
+          var hours = `${date.getHours()}`
+          if(hours < 10) hours = '0'+hours
+          if(minutes < 10) minutes = '0'+minutes
           date = `${hours}:${minutes}`
           
           
