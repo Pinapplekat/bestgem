@@ -86,8 +86,8 @@
       })
       
       socket.on('message', (userdata) => {
-        if(!data.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
-        new Message(data)
+        if(!userdata.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
+        new Message(userdata)
       })
     </script>
   </body>

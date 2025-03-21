@@ -86,7 +86,7 @@ function getUserByToken(token){
   if(exists){
     return {status:{success: true}, user: users[k]}
   }else{
-    return {status:{success: false, message: "User could not found with token"}}
+    return {status:{success: false, message: "User could not be found with token"}}
   }
 }
 
