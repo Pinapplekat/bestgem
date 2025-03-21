@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
   socket.on('message', (data) => {
     var user = getUserByToken(data.token).user
     var message = newMessage({token: data.token, username: user.username, message: data.message, room: data.room, userId: user.id})
-    if(!message.status.success) return io.emit('message', {status:{success: false, message:message.status.message},message:message.message});
+    if(!message.status.success) return io.emit('message', {status:{success: false, message:message.status.message},message:message.message, userId: "Server"});
     if(message.status.success) io.emit('message', message);
     console.log(message)
   });

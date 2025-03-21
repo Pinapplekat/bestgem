@@ -76,7 +76,7 @@
       
       socket.on('join', (user) => {
         user = user.user
-        new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: user.id})
+        new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: "Server"})
       })
       
       socket.on('message', (data) => {
