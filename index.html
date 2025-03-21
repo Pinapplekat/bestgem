@@ -59,7 +59,7 @@
           usernameBody.classList.add('usernameBody')
           
           messageBody.innerText = data.message
-          
+          console.log("USER ID: "+data.userId)
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
           }else{
@@ -76,7 +76,7 @@
       
       socket.on('join', (user) => {
         user = user.user
-        new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now()})
+        new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: user.id})
       })
       
       socket.on('message', (data) => {
