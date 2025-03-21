@@ -74,7 +74,10 @@
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
-          date = `${date.getHours()}:${date.getMinutes()}`
+          var minutes = date.getMinutes()
+          var hours = date.getHours()
+          date = `${hours}:${minutes}`
+          
           
           const messageBox = document.createElement('div')
           const usernameBody = document.createElement('b')
@@ -119,11 +122,15 @@
         document.getElementById('members').innerHTML = '<h3>People online:</h3>'
         console.log(users)
         users.forEach(user => {
-          const userbox = document.createElement('span')
+          const userbox = document.createElement('b')
+          const id = document.createElement('span')
           const br = document.createElement('br')
-          userbox.innerText = user.user.username + " #"+user.user.id
+          userbox.innerText = user.user.username
+          id.innerText = " #"+user.user.id
+          id.classList.add('dateBody')
           document.getElementById('members').appendChild(br)
           document.getElementById('members').appendChild(userbox)
+          document.getElementById('members').appendChild(id)
         })
       })
       socket.on('userLeft', (user) => {
