@@ -17,6 +17,13 @@ function newMessage(data){
   }
 }
 
+function getMessageById(id){
+  var messages = fs.readFileSync(__dirname+"/messages.json")
+  messages = Array.from(JSON.parse(messages))
+  return messages[id]
+}
+
 module.exports = {
-  newMessage
+  newMessage,
+  getMessageById
 }

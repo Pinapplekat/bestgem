@@ -34,7 +34,6 @@
       const message = document.getElementById('message')
       const socket = io();
       var previousId = -1
-
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         if (message.value) {
@@ -78,7 +77,7 @@
           previousId = data.userId
         }
       }
-      
+      new Message({username: "Server", message: "Welcome! Remember to follow the rules and respect the community!", timestamp: Date.now(), userId: "Server"})
       socket.on('join', (user) => {
         user = user.user
         new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: "Server"})

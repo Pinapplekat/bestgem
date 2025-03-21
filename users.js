@@ -13,6 +13,12 @@ function userExists(data){
   else return false
 }
 
+function getUserById(id){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  return users[id]
+}
+
 function newUser(username, password, room){
   var now = Date.now()
   var users = fs.readFileSync(__dirname+"/users.json")
