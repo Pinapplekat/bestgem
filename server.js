@@ -31,10 +31,9 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const currentdata = getUserBySocket(socket.id)
     var i = 0
-    var index = -1
     if(currentdata.status)if(!currentdata.status.success) return console.log(currentdata.status.message)
-    index = online.findIndex((user) => .id === id);
-
+    var index = online.findIndex((user) => user.socket === socket.id);
+    console.log("deleting "+currentdata.user.username+" from list")
     if (index !== -1) {
       return online.splice(index, 1)[0];
     }
@@ -50,7 +49,7 @@ app.get('/', (req,res) => {
     enterRoom(token, room)
     var userdata = getUserByToken(token).user
     io.to(getUserByToken(token).user.room).emit('join', getUserByToken(token));
-    online.push({room: userdata.room, username: userdata.username, id: userdata.id})
+    online.push({room: userdata.room, username: userdata.username, id: userdata.id, socket: userdata.socket})
   }
   else return res.redirect('/login')
 })

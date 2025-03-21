@@ -122,18 +122,10 @@ function getUserByToken(token){
 function getUserBySocket(socket){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
-  var exists = false
   var i = 0;
-  var k
-  users.forEach(item => {
-    if(item.socket == socket){
-      exists = true
-      k = i
-    }
-    i++
-  })
-  if(!k)return {status:{success: false, message: "Could not match socket ID with user"}}
-  if(exists){
+  var k = users.findIndex((user) => user.socket === socket);
+  
+  if(k !== -1){
     console.log("FOUND")
     return {status:{success: true}, user: users[k]}
   }else{
