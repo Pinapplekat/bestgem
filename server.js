@@ -3,7 +3,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser, userExists, checkPassword, validateToken, getUserByToken } = require('./users.js')
+const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom } = require('./users.js')
 const { newMessage } = require('./messages.js')
 
 const app = express();
@@ -13,7 +13,11 @@ var online = []
 
 io.on('connection', (socket) => {
   socket.on('requestroomlist', (room) => {
-    
+    var inRoom = []
+    online.forEach(user => {
+      if(user.room == room) inRoom.push(user.username)
+    })
+    io.to(room).emit('usersInRoom', inRoom)
   })
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
@@ -30,6 +34,7 @@ app.get('/', (req,res) => {
   if(!token) return res.redirect('/login')
   if(validateToken(token)){
     res.sendFile(__dirname+'/index.html')
+    enterRoom(token, room)
     io.to(getUserByToken(token).user.room).emit('join', getUserByToken(token));
     online.push(getUserByToken(token).user)
   }

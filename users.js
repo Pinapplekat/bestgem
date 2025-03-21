@@ -24,7 +24,7 @@ function enterRoom(token, room){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
   
-  var id = getUserByToken(token).id
+  var id = getUserByToken(token).user.id
   users[id].room = room
   
   fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))

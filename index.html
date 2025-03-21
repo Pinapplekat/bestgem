@@ -38,12 +38,17 @@
       const form = document.getElementById("userinput")
       const message = document.getElementById('message')
       const socket = io();
+      
+      const queryString = window.location.search
+      const urlParams = new URLSearchParams(queryString)
+      
+      socket.emit('requestroomlist', urlParams.get('room'))
+      
+      
       var previousId = -1
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         if (message.value) {
-          const queryString = window.location.search
-          const urlParams = new URLSearchParams(queryString)
           var room = urlParams.get('room')
           var token = urlParams.get('token')
           socket.emit('message', {token, message: message.value, room});
@@ -92,6 +97,16 @@
       socket.on('message', (userdata) => {
         if(!userdata.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
         new Message(userdata)
+      })
+      socket.on('usersInRoom', (users) => {
+        console.log(users)
+        users.forEach(user => {
+          const userbox = document.createElement('span')
+          const hr = document.createElement('hr')
+          userbox.innerText = user
+          document.getElementById('members').appendChild(userbox)
+          document.getElementById('members').appendChild(hr)
+        })
       })
     </script>
   </body>
