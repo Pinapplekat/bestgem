@@ -218,6 +218,9 @@ h2 {
   margin: 0;
   padding: 0;
 }
+.usernameBody{
+  opacity: 0.8
+}
 .sameUser{
   margin-bottom: 5px;
 }
