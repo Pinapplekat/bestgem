@@ -39,6 +39,22 @@
       const message = document.getElementById('message')
       const socket = io();
       
+      var ctrl = false;
+      document.addEventListener("keydown", (e) => {
+        if (e.key == "Control") ctrl = true;
+      });
+
+      document.addEventListener("keyup", (e) => {
+        if (e.key == "Control") ctrl = false;
+      });
+
+      document.addEventListener("keydown", (e) => {
+        message.value = message.value + e.key
+        // if (!ctrl)
+          message.focus();
+      });
+
+      
       const queryString = window.location.search
       const urlParams = new URLSearchParams(queryString)
       var room = urlParams.get('room')
@@ -114,6 +130,7 @@
         new Message({username: "Server", message: user.username+" has left the room", timestamp: Date.now(), userId: "Server"})
         socket.emit('requestroomlist',{ room, token })
       })
+      
     </script>
   </body>
 </html>
