@@ -88,6 +88,17 @@ function validateToken(token){
   return exists
 }
 
+function changeSocket(token, socketId){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  
+  if(!validateToken(token)) return "Could not validate token"
+  var user = getUserByToken(token).user
+  user.socket = socketId
+  
+  fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
+}
+
 function getUserByToken(token){
   var users = fs.readFileSync(__dirname+"/users.json")
   users = Array.from(JSON.parse(users))
@@ -108,6 +119,26 @@ function getUserByToken(token){
   }
 }
 
+function getUserBySocket(socket){
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  var exists = false
+  var i = 0;
+  var k
+  users.forEach(item => {
+    if(item.socket == socket){
+      exists = true
+      k = i
+    }
+    i++
+  })
+  if(exists){
+    return {status:{success: true}, user: users[k]}
+  }else{
+    return {status:{success: false, message: "User could not be found with socket ID"}}
+  }
+}
+
 module.exports = {
   newUser,
   validateToken,
@@ -116,5 +147,7 @@ module.exports = {
   getUserByToken,
   checkPassword,
   enterRoom,
-  getUserById
+  getUserById,
+  changeSocket,
+  getUserBySocket
 }

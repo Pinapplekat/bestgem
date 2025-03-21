@@ -3,7 +3,7 @@ const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
-const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom } = require('./users.js')
+const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom, changeSocket, getUserBySocket } = require('./users.js')
 const { newMessage } = require('./messages.js')
 
 const app = express();
@@ -23,11 +23,16 @@ io.on('connection', (socket) => {
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
+    changeSocket(userdata.token, socket.id)
     var message = newMessage({token: data.token, username: userdata.username+" in "+userdata.room, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);
     console.log(message)
   });
+  socket.on('disconnect', () => {
+    const userdata = getUserBySocket(socket.id).user
+    
+  })
 });
 
 app.get('/', (req,res) => {
