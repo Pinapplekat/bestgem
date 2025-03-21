@@ -33,6 +33,7 @@
       const form = document.getElementById("userinput")
       const message = document.getElementById('message')
       const socket = io();
+      var previousId = -1
 
       form.addEventListener('submit', (e) => {
         e.preventDefault()
@@ -45,7 +46,6 @@
           message.value = '';
         }
       })
-      var previousId
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
