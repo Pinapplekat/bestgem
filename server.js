@@ -15,7 +15,7 @@ io.on('connection', (socket) => {
   socket.on('requestroomlist', (data) => {
     var inRoom = []
     online.forEach(user => {
-      if(user.room == data.room) inRoom.push(user.username)
+      if(user.room == data.room) inRoom.push({user})
     })
     var user = getUserByToken(data.token).user
     io.to(user.room).emit('usersInRoom', inRoom)
@@ -24,14 +24,17 @@ io.on('connection', (socket) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
-    var message = newMessage({token: data.token, username: userdata.username+" in "+userdata.room, message: data.message, room: userdata.room, userId: userdata.id})
+    var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);
     console.log(message)
   });
   socket.on('disconnect', () => {
-    const userdata = getUserBySocket(socket.id).user
-    
+    const userdata = getUserBySocket(socket.id)
+    online = online.filter(function(item) {
+        return item !== {room: userdata.room, username: userdata.username, id: userdata.id}
+    })
+    io.to(userdata.room).emit('leave', {username: userdata.username, id: userdata.id})
   })
 });
 
@@ -41,8 +44,9 @@ app.get('/', (req,res) => {
   if(validateToken(token)){
     res.sendFile(__dirname+'/index.html')
     enterRoom(token, room)
+    var userdata = getUserByToken(token).user
     io.to(getUserByToken(token).user.room).emit('join', getUserByToken(token));
-    online.push(getUserByToken(token).user)
+    online.push({room: userdata.room, username: userdata.username, id: userdata.id})
   }
   else return res.redirect('/login')
 })

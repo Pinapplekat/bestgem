@@ -104,13 +104,14 @@
         users.forEach(user => {
           const userbox = document.createElement('span')
           const br = document.createElement('br')
-          userbox.innerText = user
+          userbox.innerText = user.username + " #"+user.id
           document.getElementById('members').appendChild(br)
           document.getElementById('members').appendChild(userbox)
         })
       })
-      socket.on('disconnect', () => {
-        
+      socket.on('leave', (user) => {
+        new Message({username: "Server", message: user.username+" has left the room", timestamp: Date.now(), userId: "Server"})
+        socket.emit('requestroomlist',{ room, token })
       })
     </script>
   </body>
