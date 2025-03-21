@@ -49,15 +49,18 @@
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
+          date = `${date.getHours()}:${date.getMinutes()}`
           
           const messageBox = document.createElement('div')
           const usernameBody = document.createElement('b')
           const messageBody = document.createElement('p')
+          const dateBody = document.createElement('span')
           
           messageBody.classList.add('messageBody')
           messageBox.classList.add('messageBox')
           usernameBody.classList.add('usernameBody')
           
+          dateBody.innerText = date
           messageBody.innerText = data.message
           console.log("USER ID: "+data.userId)
           if(previousId == data.userId){
@@ -68,6 +71,7 @@
           }
           
           messageBox.appendChild(messageBody)
+          messageBox.appendChild(dateBody)
           document.getElementById('messages').appendChild(messageBox)
           
           previousId = data.userId
