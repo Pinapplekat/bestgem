@@ -126,19 +126,19 @@ function getUserBySocket(socket){
   var i = 0;
   var k
   users.forEach(item => {
-    console.log(item)
     if(item.socket == socket){
       exists = true
       k = i
     }
     i++
   })
+  if(!k)return {status:{success: false, message: "Could not match socket ID with user"}}
   if(exists){
+    console.log("FOUND")
     return {status:{success: true}, user: users[k]}
   }else{
     return {status:{success: false, message: "User could not be found with socket ID"}}
   }
-  return {status:{success: false, message: "Uknown error"}}
 }
 
 module.exports = {

@@ -7,7 +7,6 @@ function newMessage(data){
     var messages = fs.readFileSync(__dirname+"/messages.json")
     messages = Array.from(JSON.parse(messages))
     var id = messages.length
-    console.log(data.username+" said '"+data.message+"'")
     var message = {status:{success: true}, username: data.username, timestamp: now, message: data.message, id, room: data.room, userId: data.userId}
     messages.push(message)
     fs.writeFileSync(__dirname+"/messages.json", JSON.stringify(messages))

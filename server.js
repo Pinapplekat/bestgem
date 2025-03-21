@@ -27,19 +27,18 @@ io.on('connection', (socket) => {
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);
-    console.log(message)
   });
   socket.on('disconnect', () => {
-    const userdata = getUserBySocket(socket.id).user
+    const currentdata = getUserBySocket(socket.id)
     var i = 0
     var index = -1
-    if(userdata.status)if(!userdata.status.success) return console.log(userdata.status.message)
-    online.forEach(user => {
-      if(user.id == userdata.id) index = i
-      i++
-    })
-    if(index > -1) delete online[index]
-    io.to(userdata.room).emit('userLeft', {username: userdata.username, id: userdata.id})
+    if(currentdata.status)if(!currentdata.status.success) return console.log(currentdata.status.message)
+    index = online.findIndex((user) => .id === id);
+
+    if (index !== -1) {
+      return online.splice(index, 1)[0];
+    }
+    io.to(currentdata.user.room).emit('userLeft', {username: currentdata.user.username, id: currentdata.user.id})
   })
 });
 
@@ -62,15 +61,12 @@ app.get('/logincheck', (req,res) => {
     var login = checkPassword({username, password})
     if(login.status.success){
       res.redirect('/?token='+login.token+'&room='+room)
-      console.log(username+' login success')
     }else if(!login.status.success){
       res.send(login.status.message)
-      console.log(username+' login fail')
     }
   }else{
     var user = newUser(username, password, room)
     res.redirect('/?token='+user.token+'&room='+room)
-    console.log(username+' created account')
   }
 })
 
