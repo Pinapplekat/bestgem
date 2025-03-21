@@ -9,8 +9,12 @@ const { newMessage } = require('./messages.js')
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
+var online = []
 
 io.on('connection', (socket) => {
+  socket.on('requestroomlist', (room) => {
+    
+  })
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: data.room, userId: userdata.id})
@@ -26,6 +30,7 @@ app.get('/', (req,res) => {
   if(validateToken(token)){
     res.sendFile(__dirname+'/index.html')
     io.emit('join', getUserByToken(token));
+    online.push(getUserByToken(token).user)
   }
   else return res.redirect('/login')
 })

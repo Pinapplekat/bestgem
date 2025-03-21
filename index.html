@@ -27,6 +27,11 @@
     <div id="messages">
       
     </div>
+    <div id="members">
+      <b><h3>
+        People online:
+        </h3></b>
+    </div>
     <script src="/chat.js" defer></script>
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     <script>
@@ -73,6 +78,7 @@
           
           messageBox.appendChild(messageBody)
           document.getElementById('messages').appendChild(messageBox)
+          document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight
           
           previousId = data.userId
         }

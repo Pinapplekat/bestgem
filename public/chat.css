@@ -243,3 +243,15 @@ h2 {
   user-select: none;
   margin-left: 7px;
 }
+
+#members{
+  height: 90vh;
+  width: 25vw;
+  max-height: 90vh;
+  max-width: 30vw;
+  overflow-y: auto;
+  margin: 0px;
+  position: fixed;
+  top: 0;
+  right: 10;
+}
