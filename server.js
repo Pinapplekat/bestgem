@@ -30,10 +30,15 @@ io.on('connection', (socket) => {
     console.log(message)
   });
   socket.on('disconnect', () => {
-    const userdata = getUserBySocket(socket.id)
-    online = online.filter(function(item) {
-        return item !== {room: userdata.room, username: userdata.username, id: userdata.id}
+    const userdata = getUserBySocket(socket.id).user
+    var i = 0
+    var index = -1
+    if(!userdata.status.success) return console.log(userdata.status.message)
+    online.forEach(user => {
+      if(user.id == userdata.id) index = i
+      i++
     })
+    if(index > -1) delete online[index]
     io.to(userdata.room).emit('leave', {username: userdata.username, id: userdata.id})
   })
 });

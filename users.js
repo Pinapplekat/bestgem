@@ -94,7 +94,7 @@ function changeSocket(token, socketId){
   
   if(!validateToken(token)) return "Could not validate token"
   var user = getUserByToken(token).user
-  user.socket = socketId
+  users[user.id].socket = socketId
   
   fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
 }
