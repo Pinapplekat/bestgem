@@ -12,12 +12,13 @@ const io = new Server(server);
 var online = []
 
 io.on('connection', (socket) => {
-  socket.on('requestroomlist', (room) => {
+  socket.on('requestroomlist', (data) => {
     var inRoom = []
     online.forEach(user => {
-      if(user.room == room) inRoom.push(user.username)
+      if(user.room == data.room) inRoom.push(user.username)
     })
-    io.to(room).emit('usersInRoom', inRoom)
+    var user = getUserByToken(data.token).user
+    io.to(user.room).emit('usersInRoom', inRoom)
   })
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user

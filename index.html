@@ -41,16 +41,16 @@
       
       const queryString = window.location.search
       const urlParams = new URLSearchParams(queryString)
+      var room = urlParams.get('room')
+      var token = urlParams.get('token')
       
-      socket.emit('requestroomlist', urlParams.get('room'))
-      
+      socket.emit('message', {token, message: 'has joined '+room, room});
+      socket.emit('requestroomlist',{ room, token })
       
       var previousId = -1
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         if (message.value) {
-          var room = urlParams.get('room')
-          var token = urlParams.get('token')
           socket.emit('message', {token, message: message.value, room});
           message.value = '';
         }
@@ -99,14 +99,18 @@
         new Message(userdata)
       })
       socket.on('usersInRoom', (users) => {
+        document.getElementById('members').innerHTML = '<h3>People online:</h3>'
         console.log(users)
         users.forEach(user => {
           const userbox = document.createElement('span')
-          const hr = document.createElement('hr')
+          const br = document.createElement('br')
           userbox.innerText = user
+          document.getElementById('members').appendChild(br)
           document.getElementById('members').appendChild(userbox)
-          document.getElementById('members').appendChild(hr)
         })
+      })
+      socket.on('disconnect', () => {
+        
       })
     </script>
   </body>
