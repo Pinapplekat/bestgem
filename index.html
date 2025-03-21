@@ -45,21 +45,32 @@
           message.value = '';
         }
       })
-      
+      var previousId
       class Message{
         constructor(data){
+          var date = new Date(data.timestamp)
+          
           const messageBox = document.createElement('div')
           const usernameBody = document.createElement('b')
           const messageBody = document.createElement('p')
+          
           messageBody.classList.add('messageBody')
           messageBox.classList.add('messageBox')
           usernameBody.classList.add('usernameBody')
-          var date = new Date(data.timestamp)
+          
           messageBody.innerText = data.message
-          usernameBody.innerText = data.username
-          messageBox.appendChild(usernameBody)
+          
+          if(previousId == data.userId){
+            messageBox.classList.add('sameUser')
+          }else{
+            usernameBody.innerText = data.username
+            messageBox.appendChild(usernameBody)
+          }
+          
           messageBox.appendChild(messageBody)
           document.getElementById('messages').appendChild(messageBox)
+          
+          previousId = data.userId
         }
       }
       
@@ -69,7 +80,7 @@
       })
       
       socket.on('message', (data) => {
-        if(!data.status.success) return new Message({username: data.username, message: data.status.message, timestamp: Date.now()})
+        if(!data.status.success) return new Message({username: data.username, message: data.status.message, timestamp: Date.now(), userId: data.userId})
         new Message(data)
       })
     </script>

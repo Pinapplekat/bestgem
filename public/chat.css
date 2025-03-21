@@ -212,7 +212,7 @@ h2 {
   padding-bottom: 3px;
   padding-left: 0;
   padding: 0;
-  margin: 0;
+  margin: 5px;
 }
 .messageBody{
   margin: 0;
@@ -222,5 +222,5 @@ h2 {
   opacity: 0.8
 }
 .sameUser{
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
