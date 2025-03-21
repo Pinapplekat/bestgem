@@ -224,3 +224,9 @@ h2 {
 .sameUser{
   margin-bottom: 0px;
 }
+
+.dateBody{
+  font-size: 12px;
+  opacity: 0.5;
+  user-select: none;
+}

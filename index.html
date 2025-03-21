@@ -59,19 +59,21 @@
           messageBody.classList.add('messageBody')
           messageBox.classList.add('messageBox')
           usernameBody.classList.add('usernameBody')
+          dateBody.classList.add('dateBody')
           
           dateBody.innerText = date
           messageBody.innerText = data.message
           console.log("USER ID: "+data.userId)
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
+            messageBody.appendChild(dateBody)
           }else{
             usernameBody.innerText = data.username
             messageBox.appendChild(usernameBody)
+            usernameBody.appendChild(dateBody)
           }
           
           messageBox.appendChild(messageBody)
-          messageBox.appendChild(dateBody)
           document.getElementById('messages').appendChild(messageBox)
           
           previousId = data.userId
@@ -83,8 +85,8 @@
         new Message({username: "Server", message: user.username+" has joined the room", timestamp: Date.now(), userId: "Server"})
       })
       
-      socket.on('message', (data) => {
-        if(!data.status.success) return new Message({username: data.username, message: data.status.message, timestamp: Date.now(), userId: data.userId})
+      socket.on('message', (userdata) => {
+        if(!data.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
         new Message(data)
       })
     </script>
