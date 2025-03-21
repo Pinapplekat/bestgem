@@ -18,18 +18,18 @@ io.on('connection', (socket) => {
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: data.room, userId: userdata.id})
-    if(!message.status.success) return io.emit('message', {status:{success: false, message:message.status.message},message:message.message, userId: "Server"});
-    if(message.status.success) io.emit('message', message);
+    if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message},message:message.message, userId: "Server"});
+    if(message.status.success) io.to(userdata.room).emit('message', message);
     console.log(message)
   });
 });
 
 app.get('/', (req,res) => {
-  var { token } = req.query
+  var { token, room } = req.query
   if(!token) return res.redirect('/login')
   if(validateToken(token)){
     res.sendFile(__dirname+'/index.html')
-    io.emit('join', getUserByToken(token));
+    io.to(getUserByToken(token).user.room).emit('join', getUserByToken(token));
     online.push(getUserByToken(token).user)
   }
   else return res.redirect('/login')

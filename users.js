@@ -19,6 +19,18 @@ function getUserById(id){
   return users[id]
 }
 
+function enterRoom(token, room){
+  if(!validateToken(token)) return
+  var users = fs.readFileSync(__dirname+"/users.json")
+  users = Array.from(JSON.parse(users))
+  
+  var id = getUserByToken(token).id
+  users[id].room = room
+  
+  fs.writeFileSync(__dirname+"/users.json", JSON.stringify(users))
+  return room
+}
+
 function newUser(username, password, room){
   var now = Date.now()
   var users = fs.readFileSync(__dirname+"/users.json")
@@ -102,5 +114,7 @@ module.exports = {
   generateToken,
   userExists,
   getUserByToken,
-  checkPassword
+  checkPassword,
+  enterRoom,
+  getUserById
 }
