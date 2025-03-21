@@ -63,7 +63,6 @@
           
           dateBody.innerText = date
           messageBody.innerText = data.message
-          console.log("USER ID: "+data.userId)
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
             messageBody.appendChild(dateBody)

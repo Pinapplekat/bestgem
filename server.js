@@ -11,11 +11,6 @@ const server = createServer(app);
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-  
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: data.room, userId: userdata.id})
