@@ -203,6 +203,16 @@ label {
 h2 {
   color: var(--color-text-header);
 }
+
+#message{
+  max-width: calc(100vw - 90px);
+  width: calc(70vw - 90px);
+}
+#send{
+  max-width: 80px;
+  width: 80px;
+}
+
 #messages{
   height: 90vh;
   width: 70vw;
@@ -254,4 +264,5 @@ h2 {
   position: fixed;
   top: 0;
   right: 10;
+  border-
 }
