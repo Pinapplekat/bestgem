@@ -5,11 +5,14 @@ const { join } = require('node:path');
 const { Server } = require('socket.io');
 const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom, changeSocket, getUserBySocket } = require('./users.js')
 const { newMessage } = require('./messages.js')
+const { parseCommands } = require('./command-handler.js')
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 var online = []
+
+parseCommands(__dirname+"/commands/")
 
 io.on('connection', (socket) => {
   socket.on('requestroomlist', (data) => {

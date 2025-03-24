@@ -1,5 +1,5 @@
 const fs = require('fs')
-const path = require('./commands');
+// const path = require('./commands');
 
 function getFileNames(directoryPath) {
   try {
@@ -11,8 +11,8 @@ function getFileNames(directoryPath) {
   }
 }
 
-function parseCommands(file){
-  var files = getFileNames
+function parseCommands(path){
+  var files = getFileNames(path)
   if(files.length > 0){
     files.forEach(file =>{
       console.log(file)
