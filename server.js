@@ -5,14 +5,14 @@ const { join } = require('node:path');
 const { Server } = require('socket.io');
 const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom, changeSocket, getUserBySocket } = require('./users.js')
 const { newMessage } = require('./messages.js')
-const { parseCommands } = require('./command-handler.js')
+const { parseCommands, emitCommand, checkIfCommand } = require('./command-handler.js')
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 var online = []
 
-parseCommands(__dirname+"/commands/")
+var commands = parseCommands(__dirname+"/commands/")
 
 io.on('connection', (socket) => {
   socket.on('requestroomlist', (data) => {
@@ -27,6 +27,9 @@ io.on('connection', (socket) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
+    if(checkIfCommand(data)){
+      return emitCommand(data)
+    }
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);

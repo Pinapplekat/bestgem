@@ -13,18 +13,28 @@ function getFileNames(directoryPath) {
 
 function parseCommands(path){
   var files = getFileNames(path)
-  var jsfiles = []
+  var cmdfiles = []
   if(files.length > 0){
     files.forEach(file =>{
       if(file.endsWith('.cmd.js')){
-        console.log(file)
-        jsfiles.push(file)
+        cmdfiles.push(file)
       }
     })
+    return cmdfiles
   }
+}
+
+function checkIfCommand(data){
+  
+}
+
+function emitCommand(data){
+  
 }
 
 module.exports = {
   parseCommands,
-  getFileNames
+  getFileNames,
+  emitCommand,
+  checkIfCommand
 }
