@@ -11,7 +11,11 @@ function main(messagedata){
     amount = Number(amount[1])
     if(!amount){
       return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a real number bruh", room: messagedata.room})
-    }else if(amount <= 0) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room})
+    }else if(amount <= 0) {
+      return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room, username: "Game Pro"})
+    }
+    
+    //the actual working command
     
   }else{
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room})
