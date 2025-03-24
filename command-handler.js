@@ -39,6 +39,12 @@ function checkIfCommand(data){
 }
 
 function emitCommand(data, command){
+  var path
+  commands.forEach(name => {
+    if(require(__dirname+"/commands/"+name).name == command){
+      path = name
+    }
+  })
   
 }
 
