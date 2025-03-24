@@ -4,6 +4,7 @@ const fs = require('fs')
 function newMessage(data){
   var now = Date.now()
   if(validateToken(data.token)){
+    console.log("valud token")
     var messages = fs.readFileSync(__dirname+"/messages.json")
     messages = Array.from(JSON.parse(messages))
     var id = messages.length
