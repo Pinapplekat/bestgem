@@ -28,8 +28,8 @@ io.on('connection', (socket) => {
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
     if(checkIfCommand(data).status){
-      var commandData = emitCommand(data, checkIfCommand(data).command)
-      // if(!commandData.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
+      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand(data).command)
+      if(!commandData.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
       return io.to(commandData.room).emit('message', commandData)
     }
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})

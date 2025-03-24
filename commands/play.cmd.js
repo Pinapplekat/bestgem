@@ -4,8 +4,6 @@ var description = `Put in /play 5 to enter 5 coins with a chance to recieve more
 const msgs = require('/app/messages.js')
 
 function main(messagedata){
-  console.log('called the command', messagedata)
-  return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", hi", room: messagedata.room, username: "Game Pro"})
   var amount = messagedata.message.split(' ')
   if(amount[1]){
     amount = Number(amount[1])
