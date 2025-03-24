@@ -47,6 +47,7 @@ function emitCommand(data, command){
   })
   const emitted = require(__dirname+"/commands/"+path)
   var worked = emitted.main(data)
+  return worked
 }
 
 module.exports = {
