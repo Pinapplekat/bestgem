@@ -4,6 +4,7 @@ var description = `Put in /play 5 to enter 5 coins with a chance to recieve more
 const msgs = require('/app/messages.js')
 
 function main(messagedata){
+  var playUsers = fs.readFileSync(__dirname+"/play-users.json")
   var amount = messagedata.message.split(' ')
   if(amount[1]){
     amount = Number(amount[1])
@@ -13,7 +14,7 @@ function main(messagedata){
       return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room, username: "Game Pro"})
     }
     
-    //the actual working command
+    
     
   }else{
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room, username: "Game Pro"})
