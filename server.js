@@ -27,8 +27,8 @@ io.on('connection', (socket) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
-    if(checkIfCommand(data)){
-      return emitCommand(data)
+    if(checkIfCommand(data).status){
+      return emitCommand(data, checkIfCommand(data).command)
     }else console.log('not command')
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});

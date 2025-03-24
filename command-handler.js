@@ -38,7 +38,7 @@ function checkIfCommand(data){
   return {status: isCommand, command: command}
 }
 
-function emitCommand(data){
+function emitCommand(data, command){
   
 }
 
