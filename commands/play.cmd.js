@@ -1,4 +1,4 @@
-var command = "play"
+var name = "play"
 var description = `Put in /play 5 to enter 5 coins with a chance to recieve more back or lose it!`
 
 const msgs = require('../messages.js')

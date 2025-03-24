@@ -1,5 +1,6 @@
 const fs = require('fs')
 // const path = require('./commands');
+var commands = []
 
 function getFileNames(directoryPath) {
   try {
@@ -20,12 +21,21 @@ function parseCommands(path){
         cmdfiles.push(file)
       }
     })
+    commands = cmdfiles
     return cmdfiles
   }
 }
 
 function checkIfCommand(data){
+  var isCommand = false
+  if(!data.message.startsWith('/')) return false
+  var command = data.message.split(' ')[0].split('/')[1]
+  if(!command) return false
+  commands.forEach(name => {
+    if(require(__dirname+"/commands/"+name).name == command) isCommand = true
+  })
   
+  return {status: isCommand, command: command}
 }
 
 function emitCommand(data){

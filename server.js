@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     changeSocket(userdata.token, socket.id)
     if(checkIfCommand(data)){
       return emitCommand(data)
-    }
+    }else console.log('not command')
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);
