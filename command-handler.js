@@ -11,11 +11,12 @@ function getFileNames(directoryPath) {
   }
 }
 
-
-function parseCommands(path){
-  var files = getFileNames(path)
+function parseCommands(file){
+  var files = getFileNames
   if(files.length > 0){
-    console.log()
+    files.forEach(file =>{
+      console.log(file)
+    })
   }
 }
 
