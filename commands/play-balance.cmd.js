@@ -6,18 +6,18 @@ const fs = require('fs')
 const play = require('./play.cmd.js')
 
 function main(messagedata){
-  if(!play.userExists(messagedata.userId)){
+  if(play.userExists(messagedata.userId)){
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to register with Game Pro by typing `/play 5`!", room: messagedata.room, username: "Game Pro"})
   }else{
     var players = play.getPlayers()
     var coins = 0
     players.forEach(player => {
       if(player.userId == messagedata.userId){
-        return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you have "+coins+" coins!", room: messagedata.room, username: "Game Pro"})
+        coins = player.coins
       }
     })
   }
-  return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room, username: "Game Pro"})
+  return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you have "+coins+" coins!", room: messagedata.room, username: "Game Pro"})
 }
 
 module.exports = {

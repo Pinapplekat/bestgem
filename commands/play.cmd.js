@@ -15,7 +15,7 @@ function main(messagedata){
     }
     
     var playUsers = fs.readFileSync(__dirname+"/play-users.json")
-    playUsers = Array.from(playUsers)
+    playUsers = Array.from(JSON.parse(playUsers))
     
     var currentUser
     var index = -1
@@ -31,29 +31,28 @@ function main(messagedata){
     }
     playUsers.forEach(user => {
       if(user.userId == messagedata.userId){
-        currentUser = user
         index = i
       }
       i++
     })
-    console.log(index)
     if(index < 0) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", there was an error retrieving your data!", room: messagedata.room, username: "Game Pro"})
+    if(playUsers[index].coins > amount) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you do not have enough coins!", room: messagedata.room, username: "Game Pro"})
     var won = Math.random() > 0.5
     var finalAmount
     var result
     if(won){
       playUsers[index].coins += amount
       finalAmount = amount*2
-      result = "won +"
+      result = "won "
     }else{
       playUsers[index].coins -= amount
       finalAmount = -amount
-      result = "lost -"
+      result = "lost "
     }
     playUsers[index].cash++
     
     fs.writeFileSync(__dirname+"/play-users.json", JSON.stringify(playUsers))
-    return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you just "+result+finalAmount+" coins!", room: messagedata.room, username: "Game Pro"})
+    return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you just "+result+finalAmount+" coins! You now have "+playUsers[index].coins+" coins.", room: messagedata.room, username: "Game Pro"})
   }else{
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room, username: "Game Pro"})
   }
@@ -61,10 +60,10 @@ function main(messagedata){
 
 function userExists(userId){
   var playUsers = fs.readFileSync(__dirname+"/play-users.json")
-  playUsers = Array.from(playUsers)
+  playUsers = Array.from(JSON.parse(playUsers))
   var exists = false
   playUsers.forEach(user => {
-    if(user.id == userId){
+    if(user.userId == userId){
       exists = true
     }
   })
@@ -73,7 +72,7 @@ function userExists(userId){
 
 function getPlayers(){
   var playUsers = fs.readFileSync(__dirname+"/play-users.json")
-  playUsers = Array.from(playUsers)
+  playUsers = Array.from(JSON.parse(playUsers))
   return playUsers
 }
 
