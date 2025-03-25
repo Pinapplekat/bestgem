@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { newMessage } = require('./messages.js')
 // const path = require('./commands');
 var commands = []
 
@@ -45,6 +46,7 @@ function emitCommand(data, command){
       path = name
     }
   })
+  if(!path) return newMessage(data)
   const emitted = require(__dirname+"/commands/"+path)
   var worked = emitted.main(data)
   return worked
