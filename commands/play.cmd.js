@@ -36,7 +36,7 @@ function main(messagedata){
       i++
     })
     if(index < 0) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", there was an error retrieving your data!", room: messagedata.room, username: "Game Pro"})
-    if(playUsers[index].coins > amount) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you do not have enough coins!", room: messagedata.room, username: "Game Pro"})
+    if(playUsers[index].coins < amount) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you do not have enough coins!", room: messagedata.room, username: "Game Pro"})
     var won = Math.random() > 0.5
     var finalAmount
     var result
@@ -49,7 +49,8 @@ function main(messagedata){
       finalAmount = -amount
       result = "lost "
     }
-    playUsers[index].cash++
+    playUsers[index].cash += 1
+    playUsers[index].plays += 1
     
     fs.writeFileSync(__dirname+"/play-users.json", JSON.stringify(playUsers))
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you just "+result+finalAmount+" coins! You now have "+playUsers[index].coins+" coins.", room: messagedata.room, username: "Game Pro"})
