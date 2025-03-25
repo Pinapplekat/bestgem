@@ -15,7 +15,7 @@ function main(messagedata){
     sentence.push(brainrot[word].split('_').join(' '))
   }
   sentence = sentence.join(' ')
-  return msgs.newMessage({token: 32893050508.25168, userId: 6, message: sentence, room: messagedata.room, username: "Julien"})
+  return msgs.newMessage({token: 19021981761.676968, userId: 4, message: sentence, room: messagedata.room, username: "Julien"})
 }
 
 module.exports = {
