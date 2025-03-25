@@ -28,16 +28,16 @@ function main(messagedata){
       }
       currentUser = newUser
       playUsers.push(newUser)
-      console.log(playUsers)
     }
     playUsers.forEach(user => {
-      if(user.id == messagedata.userId){
+      if(user.userId == messagedata.userId){
         currentUser = user
         index = i
       }
       i++
     })
-    
+    console.log(index)
+    if(index < 0) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", there was an error retrieving your data!", room: messagedata.room, username: "Game Pro"})
     var won = Math.random() > 0.5
     var finalAmount
     var result
@@ -50,7 +50,9 @@ function main(messagedata){
       finalAmount = -amount
       result = "lost -"
     }
+    playUsers[index].cash++
     
+    fs.writeFileSync(__dirname+"/play-users.json", JSON.stringify(playUsers))
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you just "+result+finalAmount+" coins!", room: messagedata.room, username: "Game Pro"})
   }else{
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room, username: "Game Pro"})
@@ -69,9 +71,16 @@ function userExists(userId){
   return exists
 }
 
+function getPlayers(){
+  var playUsers = fs.readFileSync(__dirname+"/play-users.json")
+  playUsers = Array.from(playUsers)
+  return playUsers
+}
+
 module.exports = {
   main,
   name,
   description,
-  userExists
+  userExists,
+  getPlayers
 }
