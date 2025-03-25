@@ -42,7 +42,7 @@ function main(messagedata){
     var result
     if(won){
       playUsers[index].coins += amount
-      finalAmount = amount*2
+      finalAmount = amount
       result = "won "
     }else{
       playUsers[index].coins -= amount
