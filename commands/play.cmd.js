@@ -14,20 +14,44 @@ function main(messagedata){
       return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room, username: "Game Pro"})
     }
     
+    var playUsers = fs.readFileSync(__dirname+"/play-users.json")
+    playUsers = Array.from(playUsers)
+    
     var currentUser
+    var index = -1
+    var i = 0
     if(!userExists(messagedata.userId)){
       var newUser = {
-        cash: 100,
+        coins: 100,
         plays: 0,
         userId: messagedata.userId
       }
       currentUser = newUser
+      playUsers.push(newUser)
+      console.log(playUsers)
     }
+    playUsers.forEach(user => {
+      if(user.id == messagedata.userId){
+        currentUser = user
+        index = i
+      }
+      i++
+    })
+    
     var won = Math.random() > 0.5
+    var finalAmount
+    var result
     if(won){
-      
+      playUsers[index].coins += amount
+      finalAmount = amount*2
+      result = "won +"
+    }else{
+      playUsers[index].coins -= amount
+      finalAmount = -amount
+      result = "lost -"
     }
     
+    return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you just "+result+finalAmount+" coins!", room: messagedata.room, username: "Game Pro"})
   }else{
     return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter an amount to play with!", room: messagedata.room, username: "Game Pro"})
   }
