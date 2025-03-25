@@ -34,8 +34,8 @@ function main(messagedata){
     if(result['data'][0]) if(result['data'][0].images) if(result['data'][0].images.original)
     var link = result['data'][0].images.original.url
     if(!link) link = 'https://cdn-icons-png.flaticon.com/512/13434/13434972.png'
+    return msgs.newMessage({token: messagedata.token, userId: messagedata.userId, message: "<img src="+link+">", room: messagedata.room, username: messagedata.username})
   });
-  // return msgs.newMessage({token: 19021981761.676968, userId: 4, message: , room: messagedata.room, username: "Julien"})
 }
 
 module.exports = {

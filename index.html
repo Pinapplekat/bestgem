@@ -92,7 +92,7 @@
           dateBody.classList.add('dateBody')
           
           dateBody.innerText = date
-          messageBody.innerText = data.message
+          messageBody.innerHTML = data.message
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
             messageBody.appendChild(dateBody)
