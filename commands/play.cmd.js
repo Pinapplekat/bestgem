@@ -13,6 +13,7 @@ function main(messagedata){
     }else if(amount <= 0) {
       return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room, username: "Game Pro"})
     }
+    
     var currentUser
     if(!userExists(messagedata.userId)){
       var newUser = {
@@ -21,6 +22,10 @@ function main(messagedata){
         userId: messagedata.userId
       }
       currentUser = newUser
+    }
+    var won = Math.random() > 0.5
+    if(won){
+      
     }
     
   }else{
