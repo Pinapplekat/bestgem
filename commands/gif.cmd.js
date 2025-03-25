@@ -11,7 +11,6 @@ function main(messagedata){
   var msg = messagedata.message
   var [first, ...msgText] = msg.split(' ')
   msgText = msgText.join(' ')
-  console.log(msgText)
   var URL =
   "/v1/gifs/search?q=" +
   msgText.split(' ').join("%20") +
@@ -28,14 +27,15 @@ function main(messagedata){
       'Content-Type': 'application/json'
     }
   };
-  rest.getJSON(options, (statusCode, result) => {
-    // I could work with the resulting HTML/JSON here. I could also just return it
+  var result = rest.getJSON(options, (statusCode, result) => {
     console.log(`onResult: (${statusCode})`);
     if(result['data'][0]) if(result['data'][0].images) if(result['data'][0].images.original)
     var link = result['data'][0].images.original.url
-    if(!link) link = 'https://cdn-icons-png.flaticon.com/512/13434/13434972.png'
-    return msgs.newMessage({token: messagedata.token, userId: messagedata.userId, message: "<img src="+link+">", room: messagedata.room, username: messagedata.username})
+    // if(!link) 
+      link = 'https://cdn-icons-png.flaticon.com/512/13434/13434972.png'
+    return link
   });
+  return msgs.newMessage({token: messagedata.token, userId: messagedata.userId, message: "<img src="+result+">", room: messagedata.room, username: messagedata.username})
 }
 
 module.exports = {
