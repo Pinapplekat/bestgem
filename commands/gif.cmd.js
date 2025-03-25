@@ -31,11 +31,12 @@ function main(messagedata){
     console.log(`onResult: (${statusCode})`);
     if(result['data'][0]) if(result['data'][0].images) if(result['data'][0].images.original)
     var link = result['data'][0].images.original.url
-    // if(!link) 
+    if(!link) 
       link = 'https://cdn-icons-png.flaticon.com/512/13434/13434972.png'
-    return link
+    console.log(link)
   });
-  return msgs.newMessage({token: messagedata.token, userId: messagedata.userId, message: "<img src="+result+">", room: messagedata.room, username: messagedata.username})
+    return msgs.newMessage({token: messagedata.token, userId: messagedata.userId, message: "<img src="+result+">", room: messagedata.room, username: messagedata.username})
+  // console.log(result)
 }
 
 module.exports = {
