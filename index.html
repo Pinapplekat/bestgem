@@ -105,7 +105,7 @@
           messageBox.appendChild(messageBody)
           document.getElementById('messages').appendChild(messageBox)
           document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight
-          
+          messageBox.classList.add('shake')
           previousId = data.userId
         }
       }
