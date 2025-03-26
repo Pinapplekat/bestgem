@@ -6,7 +6,7 @@ const fs = require('fs')
 const play = require('./play.cmd.js')
 const rest = require('./rest.js')
 
-function main(messagedata){
+async function main(messagedata){
   const KEY = "owAJki7QYorBwZCzfoyN2ggMoj3cqDOh";
   var msg = messagedata.message
   var [first, ...msgText] = msg.split(' ')
@@ -27,7 +27,7 @@ function main(messagedata){
       'Content-Type': 'application/json'
     }
   };
-  var result = rest.getJSON(options, (statusCode, result) => {
+  var result = await rest.getJSON(options, (statusCode, result) => {
     console.log(`onResult: (${statusCode})`);
     if(result['data'][0]) if(result['data'][0].images) if(result['data'][0].images.original)
     var link = result['data'][0].images.original.url
