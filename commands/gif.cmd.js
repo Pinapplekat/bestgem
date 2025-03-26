@@ -14,7 +14,6 @@ function main(messagedata){
   var body = getGifs(msgText, 1)
   if(body['data'][0]) if(body['data'][0].images) if(body['data'][0].images.original)
   var link = body['data'][0].images.original.url
-  console.log(link)
   if(!link) 
     link = 'https://cdn-icons-png.flaticon.com/512/13434/13434972.png'
   console.log(link)
@@ -34,7 +33,7 @@ function getGifs(search, limit){
   
   const response = request('GET', 'https://api.giphy.com'+URL);
   var body = response.getBody('utf8')
-  return body
+  return JSON.parse(body)
 }
 
 module.exports = {
