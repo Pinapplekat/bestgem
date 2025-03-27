@@ -35,7 +35,7 @@ function checkIfCommand(data){
   commands.forEach(name => {
     if(require(__dirname+"/commands/"+name).name == command) isCommand = true
   })
-  console.log(command)
+  console.log(command+": "+isCommand)
   return {status: isCommand, command: command}
 }
 
