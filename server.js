@@ -28,20 +28,18 @@ io.on('connection', (socket) => {
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
     if(data.message.toLowerCase().includes("bestai")){
-      console.log("Noticed user said my name")
-      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand({message: "/ai"}))
       var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
-      return io.to(userdata.room).emit('message', message)
+      io.to(userdata.room).emit('message', message)
+      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand({message: "/ai"}).command)
       if(!commandData.status){
         return io.to(userdata.room).emit('message', {status:{success: false, message:"Unknown error"},message:message.message, userId: "Server"})
       }
       if(commandData.status.success){
-        console.log("command work")
         return io.to(userdata.room).emit('message', commandData)
       }else if(!commandData.status.success){
         return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
       }
-      
+      return
     }
     if(checkIfCommand(data).status){
       var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand(data).command)
