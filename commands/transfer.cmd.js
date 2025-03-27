@@ -1,5 +1,5 @@
 var name = "transfer"
-var description = "Transfer money between you and other people!"
+var description = "Transfer money straight into your account (MUST BE ON ADMIN LIST)"
 
 const fs = require('fs')
 const messages = require("/app/messages.js")

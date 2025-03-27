@@ -6,7 +6,12 @@ const {parseCommands} = require("/app/command-handler.js")
 const fs = require('fs')
 
 function main(data){
+  var commands = parseCommands("/app/commands/")
   var message = `
+  <table class="tg" style="undefined;table-layout: fixed; width: 340px"><colgroup>
+<col style="width: 76px">
+<col style="width: 264px">
+</colgroup>
   <thead>
   <tr>
     <th class="tg-baqh">Name</th>
@@ -14,8 +19,23 @@ function main(data){
   </tr></thead>
 <tbody>
   `
+  var commandsData = []
+  commands.forEach(command => {
+    var toData = {
+      name: "/"+require("/app/commands/"+command).name,
+      description: require("/app/commands/"+command).description
+    }
+    commandsData.push(toData)
+  })
   
-  return newMessage({username: "julien", userId: 4, token: 19021981761.676968, message: message, room: data.room})
+  commandsData.forEach(command => {
+    message+=`<tr>
+                <td class="tg-0lax">${command.name}</td>
+                <td class="tg-0lax">${command.description}</td>
+              </tr>`
+  })
+  message+=`</tbody></table>`
+  return newMessage({username: "Server", userId: 15, token: 36455667440.76759, message: message, room: data.room})
 }
 
 module.exports = {
