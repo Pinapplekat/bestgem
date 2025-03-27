@@ -15,7 +15,8 @@ var description = "Ask AI questions."
 function main(data){
   var aiuser = JSON.stringify({
     username: data.username,
-    content: data.message
+    content: data.message,
+    userId: data.userId
   })
   const message = getAI(aiuser).choices[0].message.content
   return msgs.newMessage({ username: "BestAI", userId: 14, token: 16336960231.047472, message, room: data.room })
@@ -24,7 +25,7 @@ function main(data){
 function getAI(query){
   var message = {
     role: "user",
-    content: query
+    content: query,
   }
   messages.push(message)
   var json = {
