@@ -2,6 +2,7 @@ var name = "help"
 var description = "Shows a list of all the commands"
 
 const {newMessage} = require('/app/messages.js')
+const {parseCommands} = require("/app/command-handler.js")
 const fs = require('fs')
 
 function main(data){
