@@ -4,7 +4,7 @@ const request = require('sync-request');
 
 var messages = [{
       role: "developer",
-      content: "You are a chat assistant for a chatroom called 'BestGem'. Respond in short, readable messages. Talk similar to that of a chronicaly online user."
+      content: "You are a chat assistant for a chatroom called 'BestGem'. Respond in short, readable messages. Talk similar to that of a chronicaly online user. You will be given JSON data but DO NOT RESPOND IN JSON."
     }]
 
 var url = "https://api.openai.com/v1/chat/completions"
@@ -17,10 +17,7 @@ function main(data){
     username: data.username,
     content: data.message
   })
-  var msg = data.message
-  var [a, ...msgContent] = msg.split(' ')
-  msgContent = msgContent.join(' ')
-  const message = JSON.parse(getAI(aiuser).choices[0].message.content
+  const message = getAI(aiuser).choices[0].message.content
   return msgs.newMessage({ username: "BestAI", userId: 14, token: 16336960231.047472, message, room: data.room })
 }
 
@@ -55,6 +52,7 @@ function getAI(query){
     content:JSON.parse(body).choices[0].message.content,
     role: "assistant",
     rufusal: null}
+  console.log(JSON.parse(body).choices[0].message.content)
   messages.push(responded)
   return JSON.parse(body)
 }

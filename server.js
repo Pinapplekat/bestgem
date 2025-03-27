@@ -27,6 +27,11 @@ io.on('connection', (socket) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
     changeSocket(userdata.token, socket.id)
+    if(data.message.toLowerCase().includes("bestai")){
+      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, {status: true, command: "ai"})
+      io.to(userdata.room).emit('message', message)
+      return io.to(commandData.room).emit('message', commandData)
+    }
     if(checkIfCommand(data).status){
       var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand(data).command)
       if(!commandData.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
