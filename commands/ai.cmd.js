@@ -2,26 +2,37 @@ const msgs = require('/app/messages.js')
 const fs = require('fs')
 const request = require('sync-request');
 
+var messages = [{
+      role: "developer",
+      content: "You are a chat assistant for a chatroom called 'BestGem'. Respond in short, readable messages. Talk similar to that of a chronicaly online user."
+    }]
+
 var url = "https://api.openai.com/v1/chat/completions"
 
 var name = "ai"
 var description = "Ask AI questions."
 
 function main(data){
+  var aiuser = JSON.stringify({
+    username: data.username,
+    content: data.message
+  })
   var msg = data.message
-  var {a, ...msgContent} = msg.split(' ')
+  var [a, ...msgContent] = msg.split(' ')
   msgContent = msgContent.join(' ')
-  const message = getAI(msgContent).choices[0].message.content
+  const message = JSON.parse(getAI(aiuser).choices[0].message.content
   return msgs.newMessage({ username: "BestAI", userId: 14, token: 16336960231.047472, message, room: data.room })
 }
 
 function getAI(query){
+  var message = {
+    role: "user",
+    content: query
+  }
+  messages.push(message)
   var json = {
     model: "gpt-4",
-    messages: [{
-      role: "user",
-      content: query
-    }],
+    messages,
     temperature: 0,
     max_tokens: 100,
     top_p: 1,
@@ -40,6 +51,11 @@ function getAI(query){
   }
   const response = request('POST', url, options);
   var body = response.getBody('utf8')
+  var responded = {
+    content:JSON.parse(body).choices[0].message.content,
+    role: "assistant",
+    rufusal: null}
+  messages.push(responded)
   return JSON.parse(body)
 }
 
