@@ -217,17 +217,24 @@ h2 {
 @media screen and (max-width: 800px){
   form {
     margin: 0.75rem 0;
-    display: grid;
-    grid-template-columns: auto auto;
-    column-gap: 1px;
-    m
+    display: -ms-tablebox;
+    display: -webkit-table;
+    display: table;
+    width:100%;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
   }
 
   .submit{
-    grid-row: 1 / span 2;
     cursor: pointer;
+    display: table-cell;
+    vertical-align: middle;
+    padding: none;
   }
   .textbox{
-    grid-row: 1 / span 2;
+    display: table-cell;
+    vertical-align: middle;
   }
 }
