@@ -106,7 +106,7 @@
           dateBody.classList.add('dateBody')
           
           dateBody.innerText = date
-          if(data.command) dateBody.innerText = " - "+data.username+" used /"+data.command.name
+          if(data.command) dateBody.innerText += " - "+data.command.executor+" used /"+data.command.name
           messageBody.innerHTML = data.message
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
