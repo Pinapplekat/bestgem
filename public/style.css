@@ -213,3 +213,21 @@ label {
 h2 {
   color: var(--color-text-header);
 }
+
+@media screen and (max-width: 800px){
+  form {
+    margin: 0.75rem 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 1px;
+    m
+  }
+
+  .submit{
+    grid-row: 1 / span 2;
+    cursor: pointer;
+  }
+  .textbox{
+    grid-row: 1 / span 2;
+  }
+}
