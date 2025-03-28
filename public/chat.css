@@ -125,6 +125,7 @@ body {
 
 p {
   font-size: 1.25rem;
+  max-width: 95vw;
 }
 
 /* Title h1 style */
@@ -220,7 +221,7 @@ h2 {
   max-height: 90vh;
   max-width: 100vw;
   overflow-y: auto;
-  overflow-x: wrap;
+/*   overflow-x: wrap; */
   overflow-wrap: break-word;
   margin: 0px;
   position: fixed;
@@ -238,15 +239,15 @@ h2 {
   margin-left: 5px;
   margin-top: 15px;
   overflow-wrap: break-word;
-  overflow-x: wrap;
-  max-width: 95%;
+/*   overflow-x: wrap; */
+  width: 95%;
 }
 .messageBody{
   margin: 0;
   padding: 0;
   overflow-wrap: break-word;
-  overflow-x: wrap;
-  max-width: 95%;
+/*   overflow-x: wrap; */
+  width: 95%;
 }
 .usernameBody{
   opacity: 0.8;
