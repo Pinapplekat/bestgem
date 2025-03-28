@@ -14,6 +14,7 @@ function main(messagedata){
       return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you need to enter a positive number", room: messagedata.room, username: "Game Pro"})
     }
     
+    const admins = JSON.parse(fs.readFileSync("/app/admin-list.json"))
     var playUsers = fs.readFileSync(__dirname+"/play-users.json")
     playUsers = Array.from(JSON.parse(playUsers))
     
@@ -37,7 +38,8 @@ function main(messagedata){
     })
     if(index < 0) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", there was an error retrieving your data!", room: messagedata.room, username: "Game Pro"})
     if(playUsers[index].coins < amount) return msgs.newMessage({token: 32893050508.25168, userId: 6, message: messagedata.username+", you do not have enough coins!", room: messagedata.room, username: "Game Pro"})
-    var won = Math.random() > 0.5
+    var won = Math.random() < 0.5
+    if(admins.includes(messagedata.userId)) won = Math.random() < 0.65
     var finalAmount
     var result
     if(won){
