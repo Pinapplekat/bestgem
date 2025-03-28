@@ -72,11 +72,13 @@
         }
       })
       var messageBodyExt = document.getElementById('messages')
-      message.onfocusin = () => {
-        messageBodyExt.style.top = "50%"
+      message.onfocus = () => {
+        messageBodyExt.style.top = "45vh"
+        messageBodyExt.style.maxHeight = "45vh"
       }
-      message.onfocusout = () => {
+      message.onblur = () => {
         messageBodyExt.style.top = "0"
+        messageBodyExt.style.maxHeight = "90vh"
       }
       class Message{
         constructor(data){
