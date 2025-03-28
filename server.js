@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
         return io.to(userdata.room).emit('message', {status:{success: false, message:"Unknown error"},message:message.message, userId: "Server"})
       }
       if(commandData.status.success){
+        commandData.command = {name: "ai"}
         return io.to(userdata.room).emit('message', commandData)
       }else if(!commandData.status.success){
         return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
@@ -44,6 +45,7 @@ io.on('connection', (socket) => {
     if(checkIfCommand(data).status){
       var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand(data).command)
       if(!commandData.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
+      commandData.command = {name: checkIfCommand(data).command}
       return io.to(commandData.room).emit('message', commandData)
     }
     var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
