@@ -313,4 +313,8 @@ h2 {
     max-width: 70px;
     width: 70px;
   }
+  .keyboarded{
+    max-height: 45vh;
+    top: 50%;
+  }
 }

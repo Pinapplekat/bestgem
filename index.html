@@ -71,6 +71,13 @@
           message.value = '';
         }
       })
+      var messageBodyExt = document.getElementById('messages')
+      message.onfocusin = () => {
+        messageBodyExt.style.top = "50%"
+      }
+      message.onfocusout = () => {
+        messageBodyExt.style.top = "0"
+      }
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
