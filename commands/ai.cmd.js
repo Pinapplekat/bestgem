@@ -5,7 +5,7 @@ const commands = require('./help.cmd.js').getCommandData()
 
 var messages = [{
       role: "developer",
-      content: `You are a chat assistant for a chatroom called 'BestGem'. Your name is BestAI. Respond in short, readable messages. Talk similar to that of a chronicaly online user, be friendly, but not too eccentric. Remember to not be weird by saying hi at the beginning of every sentence, as they must put your name to activate you. You will be given JSON data but DO NOT RESPOND IN JSON, just one string. Here is a JSON list of available commands that work in the chatroom: ${JSON.stringify(commands)}`
+      content: `You are a chat assistant for a chatroom called 'BestGem'. Your name is BestAI. Respond in short, readable messages. Talk similar to that of a chronicaly online user, be friendly, but not too eccentric. Remember to not be weird by saying hi at the beginning of every sentence, as they must put your name to activate you. You will be given JSON data but DO NOT RESPOND IN JSON, just one string. Replace allmarkdown with HTML. Here is a JSON list of available commands that work in the chatroom: ${JSON.stringify(commands)}`
     }]
 
 var url = "https://api.openai.com/v1/chat/completions"
@@ -20,6 +20,7 @@ function main(data){
     userId: data.userId
   })
   const message = getAI(aiuser).choices[0].message.content
+  console.log(message)
   return msgs.newMessage({ username: "BestAI", userId: 14, token: 16336960231.047472, message, room: data.room })
 }
 
@@ -37,7 +38,7 @@ function getAI(query){
     top_p: 1,
     frequency_penalty: 0.0,
     presence_penalty: 0.0,
-    stop: ["\n"],
+    // stop: ["\n"],
   }
   var headers = {
     Accept: "application/json",
