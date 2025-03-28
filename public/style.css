@@ -215,9 +215,9 @@ h2 {
 }
 
 @media screen and (max-width: 800px){
-  form {
+/*   #login {
     margin: 0.75rem 0;
-    display: -ms-tablebox;
+    display: -ms-table;
     display: -webkit-table;
     display: table;
     width:100%;
@@ -225,16 +225,15 @@ h2 {
     -webkit-align-items: center;
     -webkit-box-align: center;
     align-items: center;
-  }
+  } */
 
-  .submit{
+  #login{
     cursor: pointer;
     display: table-cell;
     vertical-align: middle;
-    padding: none;
   }
-  .textbox{
+/*   input{
     display: table-cell;
     vertical-align: middle;
-  }
+  } */
 }

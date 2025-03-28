@@ -300,3 +300,17 @@ h2 {
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg .tg-baqh{text-align:center;vertical-align:top}
 .tg .tg-0lax{text-align:left;vertical-align:top}
+
+@media screen and (max-width: 800px){
+  #members{
+    display: none;
+  }
+  #message{
+    max-width: calc(100vw - 90px);
+    width: calc(100vw - 90px);
+  }
+  #send{
+    max-width: 70px;
+    width: 70px;
+  }
+}
