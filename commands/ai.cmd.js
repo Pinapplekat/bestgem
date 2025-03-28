@@ -54,7 +54,6 @@ function getAI(query){
     content:JSON.parse(body).choices[0].message.content,
     role: "assistant",
     rufusal: null}
-  console.log(JSON.parse(body).choices[0].message.content)
   messages.push(responded)
   return JSON.parse(body)
 }
