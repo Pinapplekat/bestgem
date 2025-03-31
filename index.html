@@ -43,6 +43,29 @@
         Notification.requestPermission()
       }
       
+      function sendNotification(text) {
+        if (!("Notification" in window)) {
+          console.log("Browser does not support notifications.");
+          return;
+        }
+
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            const notification = new Notification("Hello!", {
+              body: text, icon:"https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff",
+            });
+
+            notification.addEventListener("click", () => {
+              console.log("Notification clicked");
+            });
+
+            notification.addEventListener("error", (error) => {
+              console.error("Error displaying notification:", error);
+            });
+          }
+        });
+      }
+      
       var ctrl = false;
       document.addEventListener("keydown", (e) => {
         if (e.key == "Control") ctrl = true;
