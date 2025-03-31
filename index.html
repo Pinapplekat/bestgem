@@ -39,6 +39,10 @@
       const message = document.getElementById('message')
       const socket = io();
       
+      if (("Notification" in window)){
+        Notification.requestPermission()
+      }
+      
       var ctrl = false;
       document.addEventListener("keydown", (e) => {
         if (e.key == "Control") ctrl = true;
