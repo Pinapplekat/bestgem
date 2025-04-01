@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 const { newUser, userExists, checkPassword, validateToken, getUserByToken, enterRoom, changeSocket, getUserBySocket } = require('./users.js')
 const { newMessage } = require('./messages.js')
 const { parseCommands, emitCommand, checkIfCommand } = require('./command-handler.js')
+const multer = require('multer');
 
 const app = express();
 const server = createServer(app);
@@ -13,6 +14,15 @@ const io = new Server(server);
 var online = []
 
 var commands = parseCommands(__dirname+"/commands/")
+
+const storage = multer.diskStorage({
+  destination: function(req, file, callback) {
+    callback(null, '/app/files');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname);
+  }
+});
 
 io.on('connection', (socket) => {
   socket.on('requestroomlist', (data) => {
