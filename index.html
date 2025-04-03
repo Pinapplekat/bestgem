@@ -136,6 +136,7 @@
           
           dateBody.innerText = date
           if(data.command) dateBody.innerText += " - "+data.command.executor+" used /"+data.command.name
+          if(data.replyId) dateBody.innerText += " - "+data.username+" replied to "+data.replyId
           messageBody.innerHTML = data.message
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
@@ -147,10 +148,15 @@
           }
           
           messageBox.appendChild(messageBody)
+          messageBox.appendChild(replyBtn)
           document.getElementById('messages').appendChild(messageBox)
           document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight
           messageBox.classList.add('shake')
           previousId = data.userId
+          
+          replyBtn.onclick = (e) => {
+            socket.emit('reply',{token, message: message.value, room, replyId: data.id})
+          }
         }
       }
       new Message({username: "Server", message: "Welcome! Remember to follow the rules and respect the community!", timestamp: Date.now(), userId: "Server"})
@@ -161,6 +167,10 @@
       })
       
       socket.on('message', (userdata) => {
+        if(!userdata.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
+        new Message(userdata)
+      })
+      socket.on('reply', (userdata) => {
         if(!userdata.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
         new Message(userdata)
       })

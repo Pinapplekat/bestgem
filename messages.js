@@ -8,6 +8,7 @@ function newMessage(data){
     messages = Array.from(JSON.parse(messages))
     var id = messages.length
     var message = {status:{success: true}, username: data.username, timestamp: now, message: data.message, id, room: data.room, userId: data.userId}
+    if(data.replyId) message.repliedto = "reply"
     messages.push(message)
     fs.writeFileSync(__dirname+"/messages.json", JSON.stringify(messages))
     return message

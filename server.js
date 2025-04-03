@@ -33,6 +33,35 @@ io.on('connection', (socket) => {
     var user = getUserByToken(data.token).user
     io.to(user.room).emit('usersInRoom', inRoom)
   })
+  socket.on('reply', (data) => {
+    var userdata = getUserByToken(data.token).user
+    socket.join(userdata.room)
+    changeSocket(userdata.token, socket.id)
+    if(data.message.toLowerCase().includes("bestai")){
+      var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id, replyId: data.replyId})
+      io.to(userdata.room).emit('reply', message)
+      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand({message: "/ai"}).command)
+      if(!commandData.status){
+        return io.to(userdata.room).emit('reply', {status:{success: false, message:"Unknown error"},message:message.message, userId: "Server"})
+      }
+      if(commandData.status.success){
+        commandData.command = {name: "ai", executor: userdata.username}
+        return io.to(userdata.room).emit('reply', commandData)
+      }else if(!commandData.status.success){
+        return io.to(userdata.room).emit('reply', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
+      }
+      return
+    }
+    if(checkIfCommand(data).status){
+      var commandData = emitCommand({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id}, checkIfCommand(data).command)
+      if(!commandData.status.success) return io.to(userdata.room).emit('reply', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"})
+      commandData.command = {name: checkIfCommand(data).command, executor: userdata.username}
+      return io.to(commandData.room).emit('reply', commandData)
+    }
+    var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
+    if(!message.status.success) return io.to(userdata.room).emit('reply', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
+    if(message.status.success) io.to(userdata.room).emit('reply', message);
+  })
   socket.on('message', (data) => {
     var userdata = getUserByToken(data.token).user
     socket.join(userdata.room)
