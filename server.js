@@ -103,10 +103,15 @@ io.on('connection', (socket) => {
     const currentdata = getUserBySocket(socket.id)
     var i = 0
     if(currentdata.status)if(!currentdata.status.success) return console.log(currentdata.status.message)
-    var index = online.findIndex((onlineuser) => onlineuser.id === currentdata.user.id);
+    if(!currentdata.user) return console.log('Error: USER NOT FOUND')
+    if(!currentdata.user.id) return console.log('Error: NO ID')
+    try{var index = online.findIndex((onlineuser) => onlineuser.id === currentdata.user.id);
     if (index !== -1) {
       delete online[index]
     }else{
+    }} catch(e){
+      throw e
+      // console.log(e)
     }
     io.to(currentdata.user.room).emit('userLeft', {username: currentdata.user.username, id: currentdata.user.id})
   })
