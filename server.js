@@ -93,11 +93,11 @@ io.on('connection', (socket) => {
   });
   socket.on('typing', (data) => {
     var userdata = getUserByToken(data.token)
-    socket.broadcast.to(data.room).emit('typing', data)
+    socket.broadcast.to(data.room).emit('typing', {username: userdata.user.username})
   })
   socket.on('doneTyping', (data) => {
     var userdata = getUserByToken(data.token)
-    socket.broadcast.to(data.room).emit('doneTyping', data)
+    socket.broadcast.to(data.room).emit('doneTyping', {username: userdata.user.username})
   })
   socket.on('disconnect', () => {
     const currentdata = getUserBySocket(socket.id)
