@@ -231,10 +231,12 @@
       })
       var typing = []
       socket.on('typing', (user) => {
+        document.getElementById('typing').innerText = "Typing..."
         typing.push(user.username)
         updateTypers()
       })
       socket.on('doneTyping', (user) => {
+        document.getElementById('typing').innerText = ""
         var index = typing.indexOf(user.username)
         if (index > -1) {
           typing.splice(index, 1);
@@ -252,7 +254,7 @@
         }else if(typing.length == 1){
           typerstring = typing.join()+" is typing..."
         }
-        document.getElementById('typing').innerText = 'typerstring'
+        
       }
     </script>
   </body>
