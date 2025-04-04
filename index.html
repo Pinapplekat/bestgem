@@ -21,8 +21,8 @@
   <body>
     <form id="userinput">
       <input type="text" placeholder="Send a message..." id="message" autocomplete="off">
+      <label for="send" id="typing"></label>
       <input type="submit" value="Send" id="send">
-      
     </form>
     
     <div id="messages">
@@ -116,7 +116,7 @@
       
       let typingtimer;
       var typing = false
-      var doneTypingInterval = 1000
+      var doneTypingInterval = 3000
       message.addEventListener('input', e => {
         if(typing == false)
           socket.emit('typing',{ room, token })
@@ -242,12 +242,17 @@
         updateTypers()
       })
       function updateTypers(){
-        var typerstring
+        var typerstring = ''
         if(typing.length == 2){
-          typerstring = typing.join(' and ')
+          typerstring = typing.join(' and ') + " are typing..."
         }else if(typing.length > 2){
-          typerstring = typing.join(', ')
+          typerstring = typing.join(', ') + " are typing..."
+        }else if(typing.length < 1){
+          typerstring = ''
+        }else if(typing.length == 1){
+          typerstring = typing.join()+" is typing..."
         }
+        document.getElementById('typing').innerText = 'typerstring'
       }
     </script>
   </body>
