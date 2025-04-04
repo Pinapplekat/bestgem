@@ -330,3 +330,10 @@ h2 {
     font-size: 3vw;
   }
 }
+.replyBtn{
+  position: relative;
+  top: 50%;
+  right: 10px;
+  opacity: 0.7;
+  padding: 2px;
+}

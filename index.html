@@ -136,7 +136,7 @@
           
           dateBody.innerText = date
           if(data.command) dateBody.innerText += " - "+data.command.executor+" used /"+data.command.name
-          if(data.replyId) dateBody.innerText += " - "+data.username+" replied to "+data.replyId
+          if(data.repliedto) dateBody.innerText += " - "+data.username+" replied to "+data.repliedto
           messageBody.innerHTML = data.message
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
@@ -155,7 +155,9 @@
           previousId = data.userId
           
           replyBtn.onclick = (e) => {
+            if(message.value == '') return
             socket.emit('reply',{token, message: message.value, room, replyId: data.id})
+            message.value = ''
           }
         }
       }
@@ -171,7 +173,9 @@
         new Message(userdata)
       })
       socket.on('reply', (userdata) => {
-        if(!userdata.status.success) return new Message({username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId})
+        var newMessage = {username: userdata.username, message: userdata.status.message, timestamp: Date.now(), userId: userdata.userId}
+        if(userdata.repliedto) newMessage.repliedto = userdata.repliedto
+        if(!userdata.status.success) return new Message()
         new Message(userdata)
       })
       socket.on('usersInRoom', (users) => {

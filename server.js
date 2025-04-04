@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
       commandData.command = {name: checkIfCommand(data).command, executor: userdata.username}
       return io.to(commandData.room).emit('reply', commandData)
     }
-    var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id})
+    var message = newMessage({token: data.token, username: userdata.username, message: data.message, room: userdata.room, userId: userdata.id, replyId: data.replyId})
     if(!message.status.success) return io.to(userdata.room).emit('reply', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('reply', message);
   })
