@@ -138,10 +138,19 @@
           dateBody.innerText = date
           if(data.command) dateBody.innerText += " - "+data.command.executor+" used /"+data.command.name
           if(data.repliedto) {
-                      const dateBody = document.createElement('span')
+            const tooltip = document.createElement('div')
+            const replyUserBody = document.createElement('b')
+            const replymsgBody = document.createElement('p')
+            tooltip.innerText = data.repliedtomsg
+            tooltip.classList.add('tooltip')
+            tooltip.classList.add('messageBox')
+            replymsgBody.classList.add('messageBody')
+            replyUserBody.classList.add('usernameBody')
+            tooltip.appendChild(replyUserBody)
+            tooltip.appendChild(replymsgBody)
             dateBody.innerText += " - "+data.username+" replied to "+data.repliedto
             dateBody.classList.add('reply')
-
+            dateBody.appendChild(tooltip)
           }
           messageBody.innerHTML = data.message
           if(previousId == data.userId){

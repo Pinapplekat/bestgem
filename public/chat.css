@@ -341,3 +341,30 @@ h2 {
   border: none;
   background: rgba(255,255,255,0.7);
 }
+
+.reply{
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  width: auto;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  padding: 4px 6px;
+}
+
+.reply:hover .tooltip {
+  visibility: visible;
+}
