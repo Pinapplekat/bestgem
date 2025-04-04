@@ -141,7 +141,8 @@
             const tooltip = document.createElement('div')
             const replyUserBody = document.createElement('b')
             const replymsgBody = document.createElement('p')
-            tooltip.innerText = data.repliedtomsg
+            replymsgBody.innerText = data.repliedtomsg
+            replyUserBody.innerText = data.repliedto
             tooltip.classList.add('tooltip')
             tooltip.classList.add('messageBox')
             replymsgBody.classList.add('messageBody')

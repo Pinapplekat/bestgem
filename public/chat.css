@@ -351,18 +351,25 @@ h2 {
   visibility: hidden;
   background-color: black;
   color: #ffffff;
-  text-align: center;
   padding: 5px 0;
   border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
+  width: auto;
+  max-width: 400px;
+  min-width: auto;
   width: auto;
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
   padding: 4px 6px;
+}
+
+.tooltip .messageBody{
+  font-size: 15px;
+}
+.tooltip .usernameBody{
+  font-size: 12px;
 }
 
 .reply:hover .tooltip {
