@@ -230,9 +230,24 @@
       })
       var typing = []
       socket.on('typing', (user) => {
-        
+        typing.push(user.username)
+        updateTypers()
       })
-      
+      socket.on('doneTyping', (user) => {
+        var index = typing.indexOf(user.username)
+        if (index > -1) {
+          typing.splice(index, 1);
+        }
+        updateTypers()
+      })
+      function updateTypers(){
+        var typerstring
+        if(typing.length == 2){
+          typerstring = typing.join(' and ')
+        }else if(typing.length > 2){
+          typerstring = typing.join(', ')
+        }
+      }
     </script>
   </body>
 </html>
