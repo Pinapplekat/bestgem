@@ -134,9 +134,15 @@
           usernameBody.classList.add('usernameBody')
           dateBody.classList.add('dateBody')
           
+          replyBtn.innerText = 'Reply'
           dateBody.innerText = date
           if(data.command) dateBody.innerText += " - "+data.command.executor+" used /"+data.command.name
-          if(data.repliedto) dateBody.innerText += " - "+data.username+" replied to "+data.repliedto
+          if(data.repliedto) {
+                      const dateBody = document.createElement('span')
+            dateBody.innerText += " - "+data.username+" replied to "+data.repliedto
+            dateBody.classList.add('reply')
+
+          }
           messageBody.innerHTML = data.message
           if(previousId == data.userId){
             messageBox.classList.add('sameUser')
