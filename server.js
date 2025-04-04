@@ -91,6 +91,14 @@ io.on('connection', (socket) => {
     if(!message.status.success) return io.to(userdata.room).emit('message', {status:{success: false, message:message.status.message+message.room},message:message.message, userId: "Server"});
     if(message.status.success) io.to(userdata.room).emit('message', message);
   });
+  socket.on('typing', (data) => {
+    var userdata = getUserByToken(data.token)
+    io.to(data.room).emit('typing', {username: userdata.username})
+  })
+  socket.on('doneTyping', (data) => {
+    var userdata = getUserByToken(data.token)
+    io.to(data.room).emit('doneTyping', {username: userdata.username})
+  })
   socket.on('disconnect', () => {
     const currentdata = getUserBySocket(socket.id)
     var i = 0
