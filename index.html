@@ -91,12 +91,29 @@
       socket.emit('message', {token, message: 'has joined '+room, room});
       socket.emit('requestroomlist',{ room, token })
       
+      let typingtimer;
+      var typing = false
+      var doneTypingInterval = 3000
+      message.addEventListener('input', e => {
+        if(typing == false)
+          socket.emit('typing',{ room, token })
+        
+        typing  = true
+        clearTimeout(typingtimer)
+        typingtimer = setTimeout(() => {
+          socket.emit('doneTyping',{ room, token })
+          typing = false
+        }, doneTypingInterval)
+      })
+      
       var previousId = -1
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         if (message.value) {
           socket.emit('message', {token, message: message.value, room});
           message.value = '';
+          socket.emit('doneTyping',{ room, token })
+          typing = false
         }
       })
       function isMobile() {
@@ -113,21 +130,7 @@
         messageBodyExt.style.top = "0"
         messageBodyExt.style.maxHeight = "90vh"
       }
-      
-      let typingtimer;
-      var typing = false
-      var doneTypingInterval = 3000
-      message.addEventListener('input', e => {
-        if(typing == false)
-          socket.emit('typing',{ room, token })
-        
-        typing  = true
-        clearTimeout(typingtimer)
-        typingtimer = setTimeout(() => {
-          socket.emit('doneTyping',{ room, token })
-          typing = false
-        }, doneTypingInterval)
-      })
+    
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)
@@ -231,6 +234,10 @@
       })
       var typing = []
       socket.on('typing', (user) => {
+        var index = typing.indexOf(user.username)
+        if (index > -1) {
+          typing.splice(index, 1);
+        }
         typing.push(user.username)
         updateTypers()
       })
