@@ -112,6 +112,21 @@
         messageBodyExt.style.top = "0"
         messageBodyExt.style.maxHeight = "90vh"
       }
+      
+      let typingtimer;
+      var typing = false
+      var doneTypingInterval = 1000
+      message.addEventListener('input', e => {
+        socket.emit('typing',{ room, token })
+        if(typing == false) new Message({username: "Server", message: "you are typing!", timestamp: Date.now(), userId: "Server"})
+        typing  = true
+        clearTimeout(typingtimer)
+        typingtimer = setTimeout(() => {
+          socket.emit('doneTyping',{ room, token })
+          new Message({username: "Server", message: "you stopped typing!", timestamp: Date.now(), userId: "Server"})
+          typing = false
+        }, doneTypingInterval)
+      })
       class Message{
         constructor(data){
           var date = new Date(data.timestamp)

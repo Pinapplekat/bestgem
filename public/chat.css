@@ -340,6 +340,12 @@ h2 {
   font-size: 12px;
   border: none;
   background: rgba(255,255,255,0.7);
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.messageBox:hover .replyBtn{
+  visibility: visible;
 }
 
 .reply{
