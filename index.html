@@ -52,13 +52,13 @@
 
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
-            const notification = new Notification("Hello!", {
-              title,
+            const notification = new Notification(title, {
               body: text, icon:"https://lh3.googleusercontent.com/EnJqoETOIJxrUUtq8Oaw1BkJR43i2JCX9TKSpYr2PKD9I8WK1BWCqo7dVSVFNkRMCSR_mMAhDtWyzuiS_9RhKqztTCk=w128-h128-e365-rj-sc0x00ffffff",
             });
 
             notification.addEventListener("click", () => {
               console.log("Notification clicked");
+              // document.focus()
             });
 
             notification.addEventListener("error", (error) => {
@@ -190,7 +190,7 @@
           messageBox.classList.add('shake')
           previousId = data.userId
           
-          noti
+          if(!document.hasFocus()) sendNotification(data.message, data.username)
           
           replyBtn.onclick = (e) => {
             if(message.value == '') return
