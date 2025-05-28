@@ -44,7 +44,7 @@ function getAI(query){
   var headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: `Bearer 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`,
+    Authorization: 'token bruh,
   }
   var options = {
     json,
